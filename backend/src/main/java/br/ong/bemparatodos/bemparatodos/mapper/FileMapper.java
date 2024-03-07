@@ -1,14 +1,14 @@
 package br.ong.bemparatodos.bemparatodos.mapper;
 
 import br.ong.bemparatodos.bemparatodos.config.mapper.MapperConfiguration;
-import br.ong.bemparatodos.bemparatodos.record.AddressDTO;
-import br.ong.bemparatodos.bemparatodos.entity.Address;
+import br.ong.bemparatodos.bemparatodos.entity.File;
+import br.ong.bemparatodos.bemparatodos.record.FileRecord;
 import org.mapstruct.Mapper;
 
 @Mapper(config = MapperConfiguration.class)
 public interface FileMapper {
 
-    AddressDTO entitytoDto(Address address);
+    FileRecord entitytoDto(File entity);
 
-    Address dtoToEntity(AddressDTO addressDTO);
+    File dtoToEntity(FileRecord dto);
 }

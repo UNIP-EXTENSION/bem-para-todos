@@ -1,30 +1,41 @@
 package br.ong.bemparatodos.bemparatodos.record;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
+import br.ong.bemparatodos.bemparatodos.entity.address.Country;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.UUID;
 
 public record AddressRecord(
 
-        @NotNull(message = "The Id Address be null")
-        UUID id,
+   @NotNull(message = "The ID cannot be null")
+   UUID id,
 
-        @NotBlank(message = "zipcode cannot be empty")
-        @Min(value = 1, message = "zipcode must be greater than 1")
-        @Max(value = 15, message = "the maximum of the zip code is 15")
-        String zipcode,
+   @NotNull(message = "Country cannot be null")
+   Country country,
 
-        @NotBlank(message = "street cannot be empty")
-        String street,
+   @NotBlank(message = "City cannot be blank")
+   @Size(max = 100, message = "City name must be less than or equal to 100 characters")
+   String city,
 
-        @NotBlank(message = "neighborhood cannot be empty")
-        String neighborhood,
+   @NotBlank(message = "Region cannot be blank")
+   @Size(max = 100, message = "Region name must be less than or equal to 100 characters")
+   String region,
 
-        @NotBlank(message = "state cannot be empty")
-        @Min(value = 1, message = "state must be greater than 1")
-        @Max(value = 2, message = "state maximum of the state 2")
-        String state
-) {}
+   @NotBlank(message = "Postal code cannot be blank")
+   @Size(max = 20, message = "Postal code must be less than or equal to 20 characters")
+   String postalCode,
+
+   @NotBlank(message = "Address line 1 cannot be blank")
+   String line1,
+
+   @NotBlank(message = "Address line 2 cannot be blank")
+   String line2,
+
+   String line3, // optional, thus no constraint
+
+   String additionalInfo // optional, thus no constraint
+
+) {
+}

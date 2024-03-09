@@ -1,14 +1,14 @@
 package br.ong.bemparatodos.bemparatodos.mapper;
 
-import br.ong.bemparatodos.bemparatodos.dto.AddressDTO;
+import br.ong.bemparatodos.bemparatodos.config.mapper.MapperConfiguration;
 import br.ong.bemparatodos.bemparatodos.entity.Address;
-import org.mapstruct.Builder;
+import br.ong.bemparatodos.bemparatodos.record.AddressRecord;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true))
+@Mapper(config = MapperConfiguration.class)
 public interface AddressMapper {
 
-    AddressDTO entitytoDto(Address address);
+    AddressRecord entitytoDto(Address address);
 
-    Address dtoToEntity(AddressDTO addressDTO);
+    Address dtoToEntity(AddressRecord addressDTO);
 }

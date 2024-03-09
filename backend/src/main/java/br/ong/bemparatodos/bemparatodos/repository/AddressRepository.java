@@ -1,6 +1,6 @@
 package br.ong.bemparatodos.bemparatodos.repository;
 
-import br.ong.bemparatodos.bemparatodos.entity.Address;
+import br.ong.bemparatodos.bemparatodos.entity.address.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

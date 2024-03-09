@@ -9,7 +9,6 @@ import java.util.UUID;
 
 public record FileRecord(
 
-   @NotNull(message = "The ID cannot be null")
    UUID id,
 
    @NotBlank(message = "The file name cannot be blank")

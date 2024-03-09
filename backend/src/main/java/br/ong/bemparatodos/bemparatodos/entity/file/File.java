@@ -1,4 +1,4 @@
-package br.ong.bemparatodos.bemparatodos.entity;
+package br.ong.bemparatodos.bemparatodos.entity.file;
 
 import jakarta.persistence.*;
 
@@ -90,7 +90,7 @@ public class File {
   }
 
   @PrePersist
-  public void prePersist(){
+  public void prePersist() {
     uploadDate = Instant.now();
   }
 

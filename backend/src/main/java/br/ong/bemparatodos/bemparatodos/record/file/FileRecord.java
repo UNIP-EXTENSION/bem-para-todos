@@ -1,4 +1,4 @@
-package br.ong.bemparatodos.bemparatodos.record;
+package br.ong.bemparatodos.bemparatodos.record.file;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

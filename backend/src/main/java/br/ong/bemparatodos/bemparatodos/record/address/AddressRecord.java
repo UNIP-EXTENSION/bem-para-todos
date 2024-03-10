@@ -1,4 +1,4 @@
-package br.ong.bemparatodos.bemparatodos.record;
+package br.ong.bemparatodos.bemparatodos.record.address;
 
 import br.ong.bemparatodos.bemparatodos.entity.address.Country;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +9,6 @@ import java.util.UUID;
 
 public record AddressRecord(
 
-   @NotNull(message = "The ID cannot be null")
    UUID id,
 
    @NotNull(message = "Country cannot be null")

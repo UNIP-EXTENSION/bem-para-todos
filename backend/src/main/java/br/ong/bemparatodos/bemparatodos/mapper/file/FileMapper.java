@@ -1,4 +1,4 @@
-package br.ong.bemparatodos.bemparatodos.mapper;
+package br.ong.bemparatodos.bemparatodos.mapper.file;
 
 import br.ong.bemparatodos.bemparatodos.config.mapper.MapperConfiguration;
 import br.ong.bemparatodos.bemparatodos.entity.file.File;

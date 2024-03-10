@@ -1,4 +1,4 @@
-package br.ong.bemparatodos.bemparatodos.repository;
+package br.ong.bemparatodos.bemparatodos.repository.file;
 
 
 import br.ong.bemparatodos.bemparatodos.entity.file.File;

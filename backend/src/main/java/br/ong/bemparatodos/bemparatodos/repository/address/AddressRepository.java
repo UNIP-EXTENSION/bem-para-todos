@@ -1,4 +1,4 @@
-package br.ong.bemparatodos.bemparatodos.repository;
+package br.ong.bemparatodos.bemparatodos.repository.address;
 
 import br.ong.bemparatodos.bemparatodos.entity.address.Address;
 import org.springframework.data.jpa.repository.JpaRepository;

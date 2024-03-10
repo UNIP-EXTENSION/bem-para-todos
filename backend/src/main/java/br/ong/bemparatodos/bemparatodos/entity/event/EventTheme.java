@@ -3,14 +3,15 @@ package br.ong.bemparatodos.bemparatodos.entity.event;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_event_theme")
 public class EventTheme {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
   @Column(name = "theme", nullable = false)
   private String theme;
@@ -18,16 +19,16 @@ public class EventTheme {
   public EventTheme() {
   }
 
-  public EventTheme(Long id, String theme) {
+  public EventTheme(UUID id, String theme) {
     this.id = id;
     this.theme = theme;
   }
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 

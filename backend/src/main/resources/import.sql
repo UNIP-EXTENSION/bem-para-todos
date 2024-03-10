@@ -15,9 +15,9 @@ INSERT INTO tb_country (id, name, name_portuguese, code) VALUES (1, 'Brazil', 'B
 -- insert into tb_address
 INSERT INTO tb_address(id, line1, line2, line3, city, region, postal_code, country_id) VALUES('7942f7d1-1263-4fab-819e-399055861d33', 'Alameda Grajaú, 248', 'Apto 63', 'Alphaville', 'Barueri', 'SP', '06453-016', 1);
 
--- insert into tb_event_details
-INSERT INTO tb_event_details (id, dress_code_id, event_theme_id, required_item) VALUES ('a59c3fe7-d0c4-49f6-a49c-003ae6e2e65c', 1, 1, 'Required to bring PS5 controller to test available games');
-INSERT INTO tb_event_details (id, dress_code_id, event_theme_id) VALUES ('714fb9fa-1c07-4a99-99f4-294811ae3944', 2, 2);
+-- insert into tb_event_detail
+INSERT INTO tb_event_detail (id, dress_code_id, event_theme_id, required_item) VALUES ('a59c3fe7-d0c4-49f6-a49c-003ae6e2e65c', 1, 1, 'Required to bring PS5 controller to test available games');
+INSERT INTO tb_event_detail (id, dress_code_id, event_theme_id) VALUES ('714fb9fa-1c07-4a99-99f4-294811ae3944', 2, 2);
 
 -- insert into tb_event
 INSERT INTO tb_event (id, user_id, event_details, address_id, name, description, start_date, end_date)VALUES ('a2776f8c-a58e-4569-b715-27c20bddaa9d', 1, 'a59c3fe7-d0c4-49f6-a49c-003ae6e2e65c', '7942f7d1-1263-4fab-819e-399055861d33','PlayStation Annual Showcase','Join us for the PlayStation Annual Showcase, an exciting event filled with exclusive reveals, gameplay demos, and announcements from the world of PlayStation. Experience the latest in gaming technology and meet fellow enthusiasts in a day packed with entertainment and surprises.','2024-03-09T06:00:00Z', '2024-03-09T18:00:00Z');

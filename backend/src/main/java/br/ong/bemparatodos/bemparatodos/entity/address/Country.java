@@ -15,13 +15,13 @@ public class Country {
   @Id
   private Long id;
 
-  @Column(name = "name", length = 60)
+  @Column(name = "name", unique = true)
   private String name;
 
-  @Column(name = "name_portuguese", length = 60)
+  @Column(name = "name_portuguese")
   private String namePortuguese;
 
-  @Column(name = "code", length = 2)
+  @Column(name = "code", length = 2, unique = true)
   private String code;
 
   public Country() {

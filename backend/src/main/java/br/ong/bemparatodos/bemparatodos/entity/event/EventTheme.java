@@ -13,7 +13,7 @@ public class EventTheme {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @Column(name = "theme", nullable = false)
+  @Column(name = "theme", unique = true, nullable = false)
   private String theme;
 
   public EventTheme() {

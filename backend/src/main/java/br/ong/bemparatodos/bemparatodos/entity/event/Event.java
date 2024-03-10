@@ -19,13 +19,6 @@ public class Event {
   @Column(name = "user_id", nullable = false)
   private Long user;
 
-  @OneToOne(mappedBy = "event")
-  private EventDetail eventDetail;
-
-  @OneToOne(mappedBy = "event")
-  @JoinColumn(name = "address_id", nullable = false)
-  private EventAddress address;
-
   @Column(name = "name", nullable = false)
   private String name;
 
@@ -40,6 +33,12 @@ public class Event {
 
   @OneToMany(mappedBy = "event")
   private Collection<EventFile> files;
+
+  @OneToOne(mappedBy = "event")
+  private EventAddress address;
+
+  @OneToOne(mappedBy = "event")
+  private EventDetail eventDetail;
 
   public Event() {
   }

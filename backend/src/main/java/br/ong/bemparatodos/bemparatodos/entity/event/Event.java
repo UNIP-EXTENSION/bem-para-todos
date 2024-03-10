@@ -1,10 +1,10 @@
 package br.ong.bemparatodos.bemparatodos.entity.event;
 
-import br.ong.bemparatodos.bemparatodos.entity.address.Address;
 import jakarta.persistence.*;
 
 import java.time.Instant;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -22,9 +22,9 @@ public class Event {
   @OneToOne(mappedBy = "event")
   private EventDetail eventDetail;
 
-  @ManyToOne
+  @OneToOne(mappedBy = "event")
   @JoinColumn(name = "address_id", nullable = false)
-  private Address address;
+  private EventAddress address;
 
   @Column(name = "name", nullable = false)
   private String name;
@@ -44,7 +44,7 @@ public class Event {
   public Event() {
   }
 
-  public Event(UUID id, Long user, EventDetail eventDetail, Address address, String name, String description, Instant startDate, Instant endDate, Collection<EventFile> files) {
+  public Event(UUID id, Long user, EventDetail eventDetail, EventAddress address, String name, String description, Instant startDate, Instant endDate, Collection<EventFile> files) {
     this.id = id;
     this.user = user;
     this.eventDetail = eventDetail;
@@ -80,11 +80,11 @@ public class Event {
     this.eventDetail = eventDetail;
   }
 
-  public Address getAddress() {
+  public EventAddress getAddress() {
     return address;
   }
 
-  public void setAddress(Address address) {
+  public void setAddress(EventAddress address) {
     this.address = address;
   }
 

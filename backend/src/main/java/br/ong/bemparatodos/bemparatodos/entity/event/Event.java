@@ -19,8 +19,7 @@ public class Event {
   @Column(name = "user_id", nullable = false)
   private Long user;
 
-  @OneToOne()
-  @JoinColumn(name = "event_detail", nullable = false)
+  @OneToOne(mappedBy = "event")
   private EventDetail eventDetail;
 
   @ManyToOne

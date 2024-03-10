@@ -15,13 +15,15 @@ INSERT INTO tb_country (id, name, name_portuguese, code) VALUES (1, 'Brazil', 'B
 -- insert into tb_address
 INSERT INTO tb_address(id, line1, line2, line3, city, region, postal_code, country_id) VALUES('7942f7d1-1263-4fab-819e-399055861d33', 'Alameda Grajaú, 248', 'Apto 63', 'Alphaville', 'Barueri', 'SP', '06453-016', 1);
 
--- insert into tb_event_detail
-INSERT INTO tb_event_detail (id, dress_code_id, event_theme_id, required_item) VALUES ('a59c3fe7-d0c4-49f6-a49c-003ae6e2e65c', '3aec1409-cc84-4f5d-ab11-0788d15f04c0', '17b63b68-26b3-4b4b-b153-afb9fcf37989', 'Required to bring PS5 controller to test available games');
-INSERT INTO tb_event_detail (id, dress_code_id, event_theme_id) VALUES ('714fb9fa-1c07-4a99-99f4-294811ae3944', 'a63f67c8-0aed-4ea4-a86d-8a03ead3f6e4', '76d1203b-9923-4865-9172-8208c4e20e9a');
-
 -- insert into tb_event
-INSERT INTO tb_event (id, user_id, event_detail, address_id, name, description, start_date, end_date)VALUES ('a2776f8c-a58e-4569-b715-27c20bddaa9d', 1, 'a59c3fe7-d0c4-49f6-a49c-003ae6e2e65c', '7942f7d1-1263-4fab-819e-399055861d33','PlayStation Annual Showcase','Join us for the PlayStation Annual Showcase, an exciting event filled with exclusive reveals, gameplay demos, and announcements from the world of PlayStation. Experience the latest in gaming technology and meet fellow enthusiasts in a day packed with entertainment and surprises.','2024-03-09T06:00:00Z', '2024-03-09T18:00:00Z');
-INSERT INTO tb_event (id, user_id, event_detail, address_id, name, description, start_date, end_date)VALUES ('5dccd439-4320-4951-bc54-8f3e246cc2a9', 1, '714fb9fa-1c07-4a99-99f4-294811ae3944', '7942f7d1-1263-4fab-819e-399055861d33','Conference Tech 2024','Join us for the Conference Tech 2024, an exciting conference focused on the latest trends and innovations in technology. Explore cutting-edge technologies, attend insightful talks and workshops, and network with industry experts and fellow enthusiasts.','2024-03-10T06:00:00Z', '2024-03-10T18:00:00Z');
+INSERT INTO tb_event (id, user_id, address_id, name, description, start_date, end_date)VALUES ('a2776f8c-a58e-4569-b715-27c20bddaa9d', 1, '7942f7d1-1263-4fab-819e-399055861d33','PlayStation Annual Showcase','Join us for the PlayStation Annual Showcase, an exciting event filled with exclusive reveals, gameplay demos, and announcements from the world of PlayStation. Experience the latest in gaming technology and meet fellow enthusiasts in a day packed with entertainment and surprises.','2024-03-09T06:00:00Z', '2024-03-09T18:00:00Z');
+INSERT INTO tb_event (id, user_id, address_id, name, description, start_date, end_date)VALUES ('5dccd439-4320-4951-bc54-8f3e246cc2a9', 1, '7942f7d1-1263-4fab-819e-399055861d33','Conference Tech 2024','Join us for the Conference Tech 2024, an exciting conference focused on the latest trends and innovations in technology. Explore cutting-edge technologies, attend insightful talks and workshops, and network with industry experts and fellow enthusiasts.','2024-03-10T06:00:00Z', '2024-03-10T18:00:00Z');
+
+
+-- insert into tb_event_detail
+INSERT INTO tb_event_detail (id, event_id, dress_code_id, event_theme_id, required_item) VALUES ('a59c3fe7-d0c4-49f6-a49c-003ae6e2e65c', 'a2776f8c-a58e-4569-b715-27c20bddaa9d', '3aec1409-cc84-4f5d-ab11-0788d15f04c0', '17b63b68-26b3-4b4b-b153-afb9fcf37989', 'Required to bring PS5 controller to test available games');
+INSERT INTO tb_event_detail (id, event_id,dress_code_id, event_theme_id) VALUES ('714fb9fa-1c07-4a99-99f4-294811ae3944', '5dccd439-4320-4951-bc54-8f3e246cc2a9', 'a63f67c8-0aed-4ea4-a86d-8a03ead3f6e4', '76d1203b-9923-4865-9172-8208c4e20e9a');
+
 
 -- insert into tb_event_file
 INSERT INTO tb_event_file (id, event_id, file_id) VALUES ('856d2fae-21a4-4162-9523-9183fe58adfd', 'a2776f8c-a58e-4569-b715-27c20bddaa9d', '123e4567-e89b-12d3-a456-426614174000');

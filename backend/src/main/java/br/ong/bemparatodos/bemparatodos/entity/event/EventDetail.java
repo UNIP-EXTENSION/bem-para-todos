@@ -13,7 +13,8 @@ public class EventDetail {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @OneToOne(mappedBy = "eventDetail")
+  @OneToOne
+  @JoinColumn(name = "event_id", nullable = false)
   private Event event;
 
   @ManyToOne

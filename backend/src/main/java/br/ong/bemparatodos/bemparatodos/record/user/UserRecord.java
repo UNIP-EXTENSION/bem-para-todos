@@ -3,9 +3,10 @@ package br.ong.bemparatodos.bemparatodos.record.user;
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.Set;
+import java.util.UUID;
 
 public record UserRecord(
-   Long id,
+   UUID id,
 
    @NotBlank(message = "First name must not be blank")
    String firstName,

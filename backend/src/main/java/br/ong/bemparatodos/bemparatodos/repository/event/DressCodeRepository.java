@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface DressCodeRepository extends JpaRepository<DressCode, Long> {
+public interface DressCodeRepository extends JpaRepository<DressCode, UUID> {
 }

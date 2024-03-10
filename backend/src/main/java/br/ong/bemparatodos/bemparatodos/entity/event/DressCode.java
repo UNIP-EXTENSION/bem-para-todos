@@ -3,30 +3,32 @@ package br.ong.bemparatodos.bemparatodos.entity.event;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.UUID;
 
-@Entity(name = "tb_dress_code")
+@Entity
+@Table(name = "tb_dress_code")
 public class DressCode {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
-  @Column(name = "description", nullable = false)
+  @Column(name = "description", nullable = false,  unique = true)
   private String description;
 
   public DressCode() {
   }
 
-  public DressCode(Long id, String description) {
+  public DressCode(UUID id, String description) {
     this.id = id;
     this.description = description;
   }
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 

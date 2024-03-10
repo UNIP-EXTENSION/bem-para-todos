@@ -17,7 +17,7 @@ public class SecurityConfig {
         security.csrf(AbstractHttpConfigurer::disable)
                 .headers(HeadersConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/h2-console/**").permitAll();
+                    auth.requestMatchers("/**").permitAll();
                 });
 
         return security.build();

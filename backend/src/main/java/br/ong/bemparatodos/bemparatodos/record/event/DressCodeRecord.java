@@ -4,8 +4,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.UUID;
+
 public record DressCodeRecord(
-   Long id,
+   UUID id,
    
    @NotBlank(message = "Description cannot be blank")
    @Size(max = 255, message = "Description must have up to {max} characters")

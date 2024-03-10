@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
-@Entity(name = "tb_event_theme")
+@Entity
+@Table(name = "tb_event_theme")
 public class EventTheme {
 
   @Id

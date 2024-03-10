@@ -6,7 +6,8 @@ import jakarta.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
-@Entity(name = "tb_event_file")
+@Entity()
+@Table(name = "tb_event_file")
 public class EventFile {
 
   @Id

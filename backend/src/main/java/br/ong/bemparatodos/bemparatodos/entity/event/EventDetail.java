@@ -6,31 +6,31 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tb_event_details")
-public class EventDetails {
+@Table(name = "tb_event_detail")
+public class EventDetail {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @OneToOne(mappedBy = "eventDetails")
+  @OneToOne(mappedBy = "eventDetail")
   private Event event;
 
   @ManyToOne
-  @JoinColumn(name = "dress_code_id")
+  @JoinColumn(name = "dress_code_id", nullable = false)
   private DressCode dressCode;
 
   @ManyToOne
-  @JoinColumn(name = "event_theme_id")
+  @JoinColumn(name = "event_theme_id", nullable = false)
   private EventTheme eventTheme;
 
   @Column(name = "required_item")
   private String requiredItem;
 
-  public EventDetails() {
+  public EventDetail() {
   }
 
-  public EventDetails(UUID id, Event event, DressCode dressCode, EventTheme eventTheme, String requiredItem) {
+  public EventDetail(UUID id, Event event, DressCode dressCode, EventTheme eventTheme, String requiredItem) {
     this.id = id;
     this.event = event;
     this.dressCode = dressCode;
@@ -81,7 +81,7 @@ public class EventDetails {
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof EventDetails that)) return false;
+    if (!(o instanceof EventDetail that)) return false;
     return Objects.equals(id, that.id) && Objects.equals(event, that.event) && Objects.equals(dressCode, that.dressCode) && Objects.equals(eventTheme, that.eventTheme) && Objects.equals(requiredItem, that.requiredItem);
   }
 

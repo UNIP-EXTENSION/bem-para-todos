@@ -20,7 +20,7 @@ INSERT INTO tb_event_detail (id, dress_code_id, event_theme_id, required_item) V
 INSERT INTO tb_event_detail (id, dress_code_id, event_theme_id) VALUES ('714fb9fa-1c07-4a99-99f4-294811ae3944', 2, 2);
 
 -- insert into tb_event
-INSERT INTO tb_event (id, user_id, event_details, address_id, name, description, start_date, end_date)VALUES ('a2776f8c-a58e-4569-b715-27c20bddaa9d', 1, 'a59c3fe7-d0c4-49f6-a49c-003ae6e2e65c', '7942f7d1-1263-4fab-819e-399055861d33','PlayStation Annual Showcase','Join us for the PlayStation Annual Showcase, an exciting event filled with exclusive reveals, gameplay demos, and announcements from the world of PlayStation. Experience the latest in gaming technology and meet fellow enthusiasts in a day packed with entertainment and surprises.','2024-03-09T06:00:00Z', '2024-03-09T18:00:00Z');
+INSERT INTO tb_event (id, user_id, event_detail, address_id, name, description, start_date, end_date)VALUES ('a2776f8c-a58e-4569-b715-27c20bddaa9d', 1, 'a59c3fe7-d0c4-49f6-a49c-003ae6e2e65c', '7942f7d1-1263-4fab-819e-399055861d33','PlayStation Annual Showcase','Join us for the PlayStation Annual Showcase, an exciting event filled with exclusive reveals, gameplay demos, and announcements from the world of PlayStation. Experience the latest in gaming technology and meet fellow enthusiasts in a day packed with entertainment and surprises.','2024-03-09T06:00:00Z', '2024-03-09T18:00:00Z');
 
 -- insert into tb_event_file
 INSERT INTO tb_event_file (id, event_id, file_id) VALUES ('856d2fae-21a4-4162-9523-9183fe58adfd', 'a2776f8c-a58e-4569-b715-27c20bddaa9d', '123e4567-e89b-12d3-a456-426614174000');

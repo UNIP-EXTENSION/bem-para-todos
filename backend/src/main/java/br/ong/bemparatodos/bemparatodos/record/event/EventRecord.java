@@ -9,28 +9,28 @@ import java.util.Collection;
 import java.util.UUID;
 
 public record EventRecord(
-        UUID id,
+   UUID id,
 
-        @NotNull(message = "User ID cannot be null")
-        Long user,
+   @NotNull(message = "User ID cannot be null")
+   Long user,
 
-        @NotNull(message = "Event details cannot be null")
-        EventDetailRecord eventDetails,
+   @NotNull(message = "Event details cannot be null")
+   EventDetailRecord eventDetails,
 
-        @NotNull(message = "Address cannot be null")
-        AddressRecord address,
+   @NotNull(message = "Address cannot be null")
+   AddressRecord address,
 
-        @NotBlank(message = "Name cannot be blank")
-        String name,
+   @NotBlank(message = "Name cannot be blank")
+   String name,
 
-        String description,
+   String description,
 
-        @NotNull(message = "Start date cannot be null")
-        Instant startDate,
+   @NotNull(message = "Start date cannot be null")
+   Instant startDate,
 
-        @NotNull(message = "End date cannot be null")
-        Instant endDate,
+   @NotNull(message = "End date cannot be null")
+   Instant endDate,
 
-        Collection<EventFileRecord> files
+   Collection<EventFileRecord> files
 ) {
 }

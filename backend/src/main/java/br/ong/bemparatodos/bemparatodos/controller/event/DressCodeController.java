@@ -5,7 +5,6 @@ import br.ong.bemparatodos.bemparatodos.record.event.DressCodeRecord;
 import br.ong.bemparatodos.bemparatodos.service.CrudService;
 import br.ong.bemparatodos.bemparatodos.service.event.dresscode.DressCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -19,4 +19,5 @@ public record CountryRecord(
    @NotBlank(message = "Code cannot be blank")
    @Size(max = 2, message = "Code must have up to {max} characters")
    String code
-) {}
+) {
+}

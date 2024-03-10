@@ -13,7 +13,7 @@ public class DressCode {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @Column(name = "description", nullable = false,  unique = true)
+  @Column(name = "description", nullable = false, unique = true)
   private String description;
 
   public DressCode() {

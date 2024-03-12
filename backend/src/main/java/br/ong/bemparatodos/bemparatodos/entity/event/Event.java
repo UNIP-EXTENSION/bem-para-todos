@@ -1,8 +1,12 @@
 package br.ong.bemparatodos.bemparatodos.entity.event;
 
+import br.ong.bemparatodos.bemparatodos.entity.address.Address;
+import br.ong.bemparatodos.bemparatodos.entity.file.File;
+import br.ong.bemparatodos.bemparatodos.entity.user.User;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.UUID;
@@ -15,8 +19,9 @@ public class Event {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @Column(name = "user_id", nullable = false)
-  private Long user;
+  @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
 
   @Column(name = "name", nullable = false)
   private String name;
@@ -30,11 +35,17 @@ public class Event {
   @Column(name = "end_date", nullable = false)
   private Instant endDate;
 
-  @OneToMany(mappedBy = "event")
-  private Collection<EventFile> files;
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(name = "tb_event_file",
+     joinColumns = @JoinColumn(name = "event_id"),
+     inverseJoinColumns = @JoinColumn(name = "file_id"))
+  private Collection<File> files = new ArrayList<>();
 
-  @OneToOne(mappedBy = "event")
-  private EventAddress address;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinTable(name = "tb_event_address",
+     joinColumns = @JoinColumn(name = "event_id"),
+     inverseJoinColumns = @JoinColumn(name = "address_id"))
+  private Address address;
 
   @OneToOne(mappedBy = "event")
   private EventDetail eventDetail;
@@ -42,7 +53,7 @@ public class Event {
   public Event() {
   }
 
-  public Event(UUID id, Long user, EventDetail eventDetail, EventAddress address, String name, String description, Instant startDate, Instant endDate, Collection<EventFile> files) {
+  public Event(UUID id, User user, EventDetail eventDetail, Address address, String name, String description, Instant startDate, Instant endDate, Collection<File> files) {
     this.id = id;
     this.user = user;
     this.eventDetail = eventDetail;
@@ -62,11 +73,11 @@ public class Event {
     this.id = id;
   }
 
-  public Long getUser() {
+  public User getUser() {
     return user;
   }
 
-  public void setUser(Long user) {
+  public void setUser(User user) {
     this.user = user;
   }
 
@@ -78,11 +89,11 @@ public class Event {
     this.eventDetail = eventDetail;
   }
 
-  public EventAddress getAddress() {
+  public Address getAddress() {
     return address;
   }
 
-  public void setAddress(EventAddress address) {
+  public void setAddress(Address address) {
     this.address = address;
   }
 
@@ -118,11 +129,11 @@ public class Event {
     this.endDate = endDate;
   }
 
-  public Collection<EventFile> getFiles() {
+  public Collection<File> getFiles() {
     return files;
   }
 
-  public void setFiles(Collection<EventFile> files) {
+  public void setFiles(Collection<File> files) {
     this.files = files;
   }
 

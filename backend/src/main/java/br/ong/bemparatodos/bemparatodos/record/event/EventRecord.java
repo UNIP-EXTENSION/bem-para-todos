@@ -1,6 +1,9 @@
 package br.ong.bemparatodos.bemparatodos.record.event;
 
+import br.ong.bemparatodos.bemparatodos.entity.file.File;
+import br.ong.bemparatodos.bemparatodos.entity.user.User;
 import br.ong.bemparatodos.bemparatodos.record.address.AddressRecord;
+import br.ong.bemparatodos.bemparatodos.record.file.FileRecord;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -12,7 +15,7 @@ public record EventRecord(
    UUID id,
 
    @NotNull(message = "User ID cannot be null")
-   Long user,
+   User user,
 
    @NotNull(message = "Event details cannot be null")
    EventDetailRecord eventDetails,
@@ -31,6 +34,6 @@ public record EventRecord(
    @NotNull(message = "End date cannot be null")
    Instant endDate,
 
-   Collection<EventFileRecord> files
+   Collection<FileRecord> files
 ) {
 }

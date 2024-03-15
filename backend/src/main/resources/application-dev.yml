@@ -1,13 +1,13 @@
-spring:
-  datasource:
+database:
+  default:
     url: jdbc:postgresql://localhost:5433/bemparatodos
-    username: postgres
-    password: ong034
-  jpa:
-    properties:
+    username: bemparatodos
+    password: BemParaTodos@123
+    jpa:
+      properties:
+        hibernate:
+          jdbc:
+            lob:
+              non_contextual_creation: true
       hibernate:
-        jdbc:
-          lob:
-            non_contextual_creation: true
-    hibernate:
-      ddl-auto: none
+        ddl-auto: none

@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tb_file")
+@Table(name = "tb_file", schema = "main")
 public class File {
 
   @Id

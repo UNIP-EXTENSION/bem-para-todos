@@ -1,13 +1,21 @@
-database:
-  default:
-    url: jdbc:postgresql://localhost:5433/bemparatodos
-    username: bemparatodos
-    password: BemParaTodos@123
-    jpa:
-      properties:
-        hibernate:
-          jdbc:
-            lob:
-              non_contextual_creation: true
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bemparatodos
+    username: admin
+    password: admin
+
+  batch:
+    jdbc:
+      initialize-schema: always
+      schema: classpath:sql/batch/schema-postgresql.sql
+  jpa:
+    show-sql: true
+    properties:
       hibernate:
-        ddl-auto: none
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+    hibernate:
+      ddl-auto: update
+

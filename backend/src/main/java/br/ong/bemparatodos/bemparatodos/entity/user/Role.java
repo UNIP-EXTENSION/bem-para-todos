@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tb_role")
+@Table(name = "tb_role", schema = "main")
 public class Role {
 
   @Id

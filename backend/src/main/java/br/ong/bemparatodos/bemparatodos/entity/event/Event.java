@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tb_event")
+@Table(name = "tb_event", schema = "main")
 public class Event {
 
   @Id
@@ -38,13 +38,15 @@ public class Event {
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "tb_event_file",
      joinColumns = @JoinColumn(name = "event_id"),
-     inverseJoinColumns = @JoinColumn(name = "file_id"))
+     inverseJoinColumns = @JoinColumn(name = "file_id"),
+     schema = "main")
   private Collection<File> files = new ArrayList<>();
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinTable(name = "tb_event_address",
      joinColumns = @JoinColumn(name = "event_id"),
-     inverseJoinColumns = @JoinColumn(name = "address_id"))
+     inverseJoinColumns = @JoinColumn(name = "address_id"),
+     schema = "main")
   private Address address;
 
   @OneToOne(mappedBy = "event")

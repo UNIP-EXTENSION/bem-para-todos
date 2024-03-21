@@ -1,12 +1,13 @@
 package br.ong.bemparatodos.bemparatodos.entity.address;
 
+import br.ong.bemparatodos.bemparatodos.enumeration.database.SchemaEnum;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tb_address")
+@Table(name = "tb_address", schema = "main")
 public class Address {
 
   @Id

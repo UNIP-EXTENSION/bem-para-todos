@@ -1,21 +1,22 @@
-database:
-  default:
-    url: jdbc:h2:mem:default
-    username: sa
-    password: teste
-    jpa:
-      show-sql: true
-      properties:
-        hibernate:
-          format_sql: true
-      hibernate:
-        ddl-auto: create
-
 # Dados de conexao com o banco H2
 spring:
-  # Configuracao do cliente web do banco H2
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:sql/h2/init.sql'
+    username: sa
+    password:
+
+  batch:
+    jdbc:
+      initialize-schema: embedded
+      schema: classpath:sql/batch/schema-h2.sql
+
   h2:
     console:
       enabled: true
       path: /h2-console
 
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/components/button_auth.dart';
 import 'package:frontend/components/input-auth.dart';
+import 'package:frontend/components/button-google.dart';
 
 class AuthForm extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
@@ -82,6 +83,10 @@ class _AuthFormState extends State<AuthForm> {
               text: 'Cadastrar',
               onPressed: _submit,
             ),
+            const SizedBox(height: 11),
+            const ButtonGoogle(
+              text: 'Cadastrar com o Google',
+            )
           ],
         ),
       ),

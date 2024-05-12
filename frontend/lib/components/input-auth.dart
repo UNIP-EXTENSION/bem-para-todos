@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class InputAuth extends StatelessWidget {
   final String labelText;
@@ -8,12 +7,12 @@ class InputAuth extends StatelessWidget {
   final TextEditingController controller;
 
   const InputAuth({
-    Key? key,
+    super.key,
     required this.labelText,
     required this.hintText,
     this.obscureText = false,
     required this.controller,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

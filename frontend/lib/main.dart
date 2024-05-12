@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Bem para todos",
       theme: ThemeData(
-        primaryColor: Colors.amber,
+        primaryColor: const Color(0xFFFAB603),
       ),
       home: const AuthPage(),
       debugShowCheckedModeBanner: false,

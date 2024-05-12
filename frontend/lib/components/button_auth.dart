@@ -21,6 +21,15 @@ class ButtonAuth extends StatelessWidget {
             colors: [Color(0xFF0673F9), Color(0xFF044493)],
           ),
           borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFF6B6B6B).withOpacity(0.5), // Cor da sombra
+              spreadRadius: 2, // Alargamento da sombra
+              blurRadius: 2, // Desfoque da sombra
+              offset:
+                  const Offset(0, 3), // Offset da sombra (horizontal, vertical)
+            ),
+          ],
         ),
         child: ElevatedButton(
           onPressed: onPressed,

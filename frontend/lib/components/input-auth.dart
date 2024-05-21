@@ -5,13 +5,14 @@ class InputAuth extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final TextEditingController controller;
-
+  final functionValidator;
   const InputAuth({
     super.key,
     required this.labelText,
     required this.hintText,
     this.obscureText = false,
     required this.controller,
+    required this.functionValidator
   });
 
   @override
@@ -37,6 +38,7 @@ class InputAuth extends StatelessWidget {
       ),
       height: 45,
       child: TextFormField(
+        validator: functionValidator,
         obscureText: obscureText,
         controller: controller,
         decoration: InputDecoration(

@@ -20,6 +20,18 @@ class _AuthFormState extends State<AuthForm> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+      
+  Map<String, dynamic> mapController() {
+    Map<String, String> map = {
+      "name": _nameController.text,
+      "lastName": _lastNameController.text,
+      "email": _emailController.text,
+      "confirmEmail": _confirmEmailController.text,
+      "password": _passwordController.text,
+      "confirmPassword": _confirmPasswordController.text,
+    };
+    return map;
+  }
 
   void _submit() {
     final String name = _nameController.text;
@@ -30,13 +42,9 @@ class _AuthFormState extends State<AuthForm> {
     final String confirmPassword = _confirmPasswordController.text;
 
     sucessAlert(context);
-    print('Nome: $name');
-    print('Nome: $lastName');
-    print('E-mail: $email');
-    print('Confirme o E-mail: $confirmEmail');
-    print('Senha: $password');
-    print('Confirme a Senha: $confirmPassword');
   }
+
+  void _validFieldsRequireds() {}
 
   @override
   void dispose() {
@@ -57,32 +65,38 @@ class _AuthFormState extends State<AuthForm> {
         child: Column(
           children: [
             InputAuth(
+              functionValidator: _validFieldsRequireds,
               labelText: 'Digite seu nome',
               hintText: 'Seu nome',
               controller: _nameController,
             ),
             InputAuth(
+              functionValidator: _validFieldsRequireds,
               labelText: 'Digite seu sobrenome',
               hintText: 'Seu sobrenome',
               controller: _lastNameController,
             ),
             InputAuth(
+              functionValidator: _validFieldsRequireds,
               labelText: 'E-mail',
               hintText: 'Seu e-mail',
               controller: _emailController,
             ),
             InputAuth(
+              functionValidator: _validFieldsRequireds,
               labelText: 'Confirme seu E-mail',
               hintText: 'Confirme seu e-mail',
               controller: _confirmEmailController,
             ),
             InputAuth(
+              functionValidator: _validFieldsRequireds,
               labelText: 'Digite sua senha',
               hintText: 'Sua senha',
               obscureText: true,
               controller: _passwordController,
             ),
             InputAuth(
+              functionValidator: _validFieldsRequireds,
               labelText: 'Confirme sua senha',
               hintText: 'Confirme sua senha',
               obscureText: true,

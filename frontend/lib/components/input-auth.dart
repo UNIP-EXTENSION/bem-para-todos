@@ -1,20 +1,36 @@
 import 'package:flutter/material.dart';
 
-class InputAuth extends StatelessWidget {
+class InputAuth extends StatefulWidget {
   final String labelText;
   final String hintText;
   final bool obscureText;
   final TextEditingController controller;
-  final functionValidator;
-  const InputAuth({
-    super.key,
-    required this.labelText,
-    required this.hintText,
-    this.obscureText = false,
-    required this.controller,
-    required this.functionValidator
-  });
+  final String value;
+  const InputAuth(
+      {super.key,
+      required this.labelText,
+      required this.hintText,
+      this.obscureText = false,
+      required this.controller,
+      required this.value});
 
+  @override
+  State<InputAuth> createState() => _InputAuthState();
+}
+
+class _InputAuthState extends State<InputAuth> {
+  String? valueValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Insira todos os campos obrigatórios';
+    }
+    return null;
+  }
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.text = widget.value;
+    valueValidator;
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,11 +54,11 @@ class InputAuth extends StatelessWidget {
       ),
       height: 45,
       child: TextFormField(
-        validator: functionValidator,
-        obscureText: obscureText,
-        controller: controller,
+        validator: valueValidator,
+        obscureText: widget.obscureText,
+        controller: widget.controller,
         decoration: InputDecoration(
-            hintText: hintText,
+            hintText: widget.hintText,
             border: InputBorder.none,
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 18.0, vertical: 13.0),

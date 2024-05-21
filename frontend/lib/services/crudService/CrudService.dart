@@ -4,7 +4,7 @@ import 'package:http_interceptor/http_interceptor.dart';
 import 'dart:convert';
 
 class Crudservice {
-  static const String url = 'localhost:8080/';
+  static const String url = 'http://localhost:8080/';
   final String resource;
   Crudservice({required this.resource});
 

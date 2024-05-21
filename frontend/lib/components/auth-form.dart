@@ -3,6 +3,8 @@ import 'package:frontend/components/buttons/button_auth.dart';
 import 'package:frontend/components/input-auth.dart';
 import 'package:frontend/components/buttons/button-google.dart';
 import 'package:frontend/helpers/situation-alerts.dart';
+import 'package:frontend/models/User/User.dart';
+import 'package:frontend/services/crudService/CrudService.dart';
 
 class AuthForm extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
@@ -20,7 +22,7 @@ class _AuthFormState extends State<AuthForm> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-      
+
   Map<String, dynamic> mapController() {
     Map<String, String> map = {
       "name": _nameController.text,
@@ -33,18 +35,26 @@ class _AuthFormState extends State<AuthForm> {
     return map;
   }
 
-  void _submit() {
-    final String name = _nameController.text;
-    final String lastName = _lastNameController.text;
-    final String email = _emailController.text;
-    final String confirmEmail = _confirmEmailController.text;
-    final String password = _passwordController.text;
-    final String confirmPassword = _confirmPasswordController.text;
-
-    sucessAlert(context);
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      // Form is valid, proceed with further actions
+      waitingAlert(context);
+      Crudservice(resource: "users").post(map: mapUser()).then((value) {
+        sucessAlert(context);
+      });
+    }
   }
 
-  void _validFieldsRequireds() {}
+  Map<String, dynamic> mapUser() {
+    User user = User(
+        fisrtName: mapController()["name"],
+        lastName: mapController()["lastName"],
+        email: mapController()["email"],
+        password: mapController()["password"]);
+    return user.map();
+  }
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -62,50 +72,51 @@ class _AuthFormState extends State<AuthForm> {
       color: Colors.transparent,
       elevation: 0,
       child: Form(
+        key: _formKey,
         child: Column(
           children: [
             InputAuth(
-              functionValidator: _validFieldsRequireds,
               labelText: 'Digite seu nome',
               hintText: 'Seu nome',
               controller: _nameController,
+              value: _nameController.text,
             ),
             InputAuth(
-              functionValidator: _validFieldsRequireds,
               labelText: 'Digite seu sobrenome',
               hintText: 'Seu sobrenome',
               controller: _lastNameController,
+              value: _lastNameController.text,
             ),
             InputAuth(
-              functionValidator: _validFieldsRequireds,
               labelText: 'E-mail',
               hintText: 'Seu e-mail',
               controller: _emailController,
+              value: _emailController.text,
             ),
             InputAuth(
-              functionValidator: _validFieldsRequireds,
               labelText: 'Confirme seu E-mail',
               hintText: 'Confirme seu e-mail',
               controller: _confirmEmailController,
+              value: _confirmEmailController.text,
             ),
             InputAuth(
-              functionValidator: _validFieldsRequireds,
               labelText: 'Digite sua senha',
               hintText: 'Sua senha',
               obscureText: true,
               controller: _passwordController,
+              value: _passwordController.text,
             ),
             InputAuth(
-              functionValidator: _validFieldsRequireds,
               labelText: 'Confirme sua senha',
               hintText: 'Confirme sua senha',
               obscureText: true,
               controller: _confirmPasswordController,
+              value: _confirmPasswordController.text,
             ),
             const SizedBox(height: 16),
             ButtonAuth(
               text: 'Cadastrar',
-              onPressed: _submit,
+              onPressed: _submitForm,
             ),
             const SizedBox(height: 11),
             const ButtonGoogle(

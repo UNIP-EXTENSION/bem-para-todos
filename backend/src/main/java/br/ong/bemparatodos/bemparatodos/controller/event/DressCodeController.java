@@ -22,7 +22,7 @@ public class DressCodeController extends CrudController<DressCodeRecord, UUID> {
   }
 
   @Override
-  protected CrudService<DressCodeRecord, UUID> getService() {
+  protected CrudService<DressCodeRecord, UUID>  getService() {
     return service;
   }
 

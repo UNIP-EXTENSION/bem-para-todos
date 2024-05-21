@@ -1,8 +1,10 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:frontend/components/auth-form.dart';
 
 class AuthPage extends StatelessWidget {
-  const AuthPage({Key? key});
+  const AuthPage({super.key});
 
   @override
   Widget build(BuildContext context) {

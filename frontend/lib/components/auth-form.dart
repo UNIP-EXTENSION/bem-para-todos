@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/button_auth.dart';
+import 'package:frontend/components/buttons/button_auth.dart';
 import 'package:frontend/components/input-auth.dart';
-import 'package:frontend/components/button-google.dart';
+import 'package:frontend/components/buttons/button-google.dart';
+import 'package:frontend/helpers/situation-alerts.dart';
 
 class AuthForm extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
@@ -13,6 +14,7 @@ class AuthForm extends StatefulWidget {
 
 class _AuthFormState extends State<AuthForm> {
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _confirmEmailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -21,12 +23,15 @@ class _AuthFormState extends State<AuthForm> {
 
   void _submit() {
     final String name = _nameController.text;
+    final String lastName = _lastNameController.text;
     final String email = _emailController.text;
     final String confirmEmail = _confirmEmailController.text;
     final String password = _passwordController.text;
     final String confirmPassword = _confirmPasswordController.text;
 
+    sucessAlert(context);
     print('Nome: $name');
+    print('Nome: $lastName');
     print('E-mail: $email');
     print('Confirme o E-mail: $confirmEmail');
     print('Senha: $password');
@@ -55,6 +60,11 @@ class _AuthFormState extends State<AuthForm> {
               labelText: 'Digite seu nome',
               hintText: 'Seu nome',
               controller: _nameController,
+            ),
+            InputAuth(
+              labelText: 'Digite seu sobrenome',
+              hintText: 'Seu sobrenome',
+              controller: _lastNameController,
             ),
             InputAuth(
               labelText: 'E-mail',

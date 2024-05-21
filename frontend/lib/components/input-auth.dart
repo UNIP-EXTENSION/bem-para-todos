@@ -43,11 +43,11 @@ class InputAuth extends StatelessWidget {
             hintText: hintText,
             border: InputBorder.none,
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 18.0),
+                const EdgeInsets.symmetric(horizontal: 18.0, vertical: 13.0),
             hintStyle: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
-                color: Color(0x71666666))),
+                color: Colors.black45)),
       ),
     );
   }

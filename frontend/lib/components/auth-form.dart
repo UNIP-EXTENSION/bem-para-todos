@@ -40,6 +40,7 @@ class _AuthFormState extends State<AuthForm> {
       // Form is valid, proceed with further actions
       waitingAlert(context);
       Crudservice(resource: "users").post(map: mapUser()).then((value) {
+        Navigator.pop(context);
         sucessAlert(context);
       });
     }
@@ -74,6 +75,8 @@ class _AuthFormState extends State<AuthForm> {
       child: Form(
         key: _formKey,
         child: Column(
+           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             InputAuth(
               labelText: 'Digite seu nome',

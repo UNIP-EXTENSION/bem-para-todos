@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class InputAuth extends StatefulWidget {
   final String labelText;
-  final String hintText;
+  String? hintText;
   final bool obscureText;
   final TextEditingController controller;
   final String value;
-  const InputAuth(
+  InputAuth(
       {super.key,
       required this.labelText,
-      required this.hintText,
+      this.hintText,
       this.obscureText = false,
       required this.controller,
       required this.value});
@@ -25,12 +26,13 @@ class _InputAuthState extends State<InputAuth> {
     }
     return null;
   }
+
   @override
   void initState() {
     super.initState();
     widget.controller.text = widget.value;
-    valueValidator;
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -52,20 +54,20 @@ class _InputAuthState extends State<InputAuth> {
           ),
         ],
       ),
-      height: 45,
-      child: TextFormField(
-        validator: valueValidator,
-        obscureText: widget.obscureText,
-        controller: widget.controller,
-        decoration: InputDecoration(
-            hintText: widget.hintText,
-            border: InputBorder.none,
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 18.0, vertical: 13.0),
-            hintStyle: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.black45)),
+      child: Column(
+        children: [
+          TextFormField(
+            obscureText: widget.obscureText,
+            controller: widget.controller,
+            validator: valueValidator,
+            decoration: InputDecoration(
+              hintText: widget.hintText,
+              border: InputBorder.none,
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            ),
+          ),
+        ],
       ),
     );
   }

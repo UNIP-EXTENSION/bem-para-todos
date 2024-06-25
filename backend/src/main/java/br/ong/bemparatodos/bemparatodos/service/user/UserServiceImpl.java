@@ -3,6 +3,7 @@ package br.ong.bemparatodos.bemparatodos.service.user;
 import br.ong.bemparatodos.bemparatodos.entity.user.User;
 import br.ong.bemparatodos.bemparatodos.mapper.user.UserInsertMapper;
 import br.ong.bemparatodos.bemparatodos.mapper.user.UserMapper;
+import br.ong.bemparatodos.bemparatodos.record.event.DressCodeRecord;
 import br.ong.bemparatodos.bemparatodos.record.user.UserInsertRecord;
 import br.ong.bemparatodos.bemparatodos.record.user.UserRecord;
 import br.ong.bemparatodos.bemparatodos.repository.user.UserRepository;
@@ -10,10 +11,15 @@ import br.ong.bemparatodos.bemparatodos.service.exception.resource.ResourceInval
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 
@@ -24,15 +30,22 @@ public class UserServiceImpl implements UserService {
 
   private final UserInsertMapper userInsertMapper;
 
+  private static Set<UserRecord> userRecords;
+
+  private final UserMapper userMapper;
+
   @Autowired
-  public UserServiceImpl(final UserRepository userRepository, final UserInsertMapper userMapper) {
+  public UserServiceImpl(final UserRepository userRepository, final UserInsertMapper userInsertMapper, UserMapper userMapper) {
     this.userRepository = userRepository;
-    this.userInsertMapper = userMapper;
+    this.userInsertMapper = userInsertMapper;
+    this.userMapper = userMapper;
   }
 
   @Override
   public Page<UserInsertRecord> findAllPaged(Pageable pageable) {
-    return null;
+    Page<User> userPage = userRepository.findAll(pageable);
+    Set<UserInsertRecord>userInsertRecords =userPage.getContent().stream().map(userInsertMapper::entitytoRecord).collect(Collectors.toSet());
+    return new PageImpl<>(new ArrayList<>(userInsertRecords), pageable, userPage.getTotalElements());
   }
 
   @Override

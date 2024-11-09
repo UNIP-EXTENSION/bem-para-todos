@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/components/cards/album_card.dart';
 
 class GalleryView extends StatelessWidget {
   final List<Map<String, String>> events;
@@ -16,17 +17,12 @@ class GalleryView extends StatelessWidget {
       ),
       itemCount: events.length,
       itemBuilder: (context, index) {
-        return Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.network(
-              events[index]['image']!,
-              fit: BoxFit.cover,
-            ),
-          ),
+        return AlbumCard(
+          name: events[index]['name']!,
+          imageUrl: events[index]['image']!,
+          onPressed: () {
+            print('Clicou no ${events[index]['name']}');
+          },
         );
       },
     );

@@ -3,6 +3,7 @@ import 'package:frontend/components/buttons/button_auth.dart';
 import 'package:frontend/components/buttons/button-google.dart';
 import 'package:frontend/components/inputs/input-auth.dart';
 import 'package:frontend/models/User/User.dart';
+import 'package:frontend/pages/home_screen.dart';
 
 class LoginForm extends StatefulWidget {
   final Function onNavigateToAuthPage;
@@ -35,7 +36,10 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void _submitForm() {
-    print('Tentando logar: ${mapUser()}');
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => HomeScreen()),
+    );
   }
 
   @override

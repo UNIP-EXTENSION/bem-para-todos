@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/components/buttons/button_auth.dart';
-import 'package:frontend/components/input-auth.dart';
+import 'package:frontend/components/inputs/input-auth.dart';
 import 'package:frontend/components/buttons/button-google.dart';
 import 'package:frontend/helpers/situation-alerts.dart';
 import 'package:frontend/models/User/User.dart';
@@ -75,7 +75,7 @@ class _AuthFormState extends State<AuthForm> {
       child: Form(
         key: _formKey,
         child: Column(
-           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             InputAuth(

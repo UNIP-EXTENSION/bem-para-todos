@@ -7,13 +7,17 @@ class InputAuth extends StatefulWidget {
   final bool obscureText;
   final TextEditingController controller;
   final String value;
-  InputAuth(
-      {super.key,
-      required this.labelText,
-      this.hintText,
-      this.obscureText = false,
-      required this.controller,
-      required this.value});
+  final double marginBottom;
+
+  InputAuth({
+    super.key,
+    required this.labelText,
+    this.hintText,
+    this.obscureText = false,
+    required this.controller,
+    required this.value,
+    this.marginBottom = 22.0,
+  });
 
   @override
   State<InputAuth> createState() => _InputAuthState();
@@ -36,7 +40,7 @@ class _InputAuthState extends State<InputAuth> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 22.0),
+      margin: EdgeInsets.only(bottom: widget.marginBottom),
       decoration: BoxDecoration(
         color: const Color(0xFFFFFFFF),
         borderRadius: BorderRadius.circular(8.0),

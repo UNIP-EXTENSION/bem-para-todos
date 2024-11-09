@@ -12,6 +12,10 @@ class User {
       required this.email,
       required this.password});
 
+  User.login({required this.email, required this.password})
+      : fisrtName = '',
+        lastName = '';
+
   //Converte os dados em um json
   User.fromMap(Map<String, String> map)
       : fisrtName = map['firstName']!,

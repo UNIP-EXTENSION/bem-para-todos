@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/components/bars/app_bar.dart';
 import 'package:frontend/views/home/event_view.dart';
 import 'package:frontend/views/home/gallery_view.dart';
 
@@ -34,15 +35,12 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFFAB603),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: const [
-            Tab(text: 'Eventos'),
-            Tab(text: 'Álbum'),
-          ],
-        ),
+      appBar: CustomAppBar(
+        tabController: _tabController,
+        tabs: const [
+          Tab(text: 'Eventos'),
+          Tab(text: 'Álbum'),
+        ],
       ),
       body: TabBarView(
         controller: _tabController,

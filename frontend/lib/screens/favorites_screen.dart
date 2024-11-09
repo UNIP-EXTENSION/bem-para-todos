@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/components/bars/app_bar.dart';
 import 'package:frontend/components/cards/event_card.dart';
 
 class FavoriteScreen extends StatefulWidget {
@@ -34,14 +35,11 @@ class _FavoriteScreen extends State<FavoriteScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFFAB603),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: const [
-            Tab(text: 'Favoritos'),
-          ],
-        ),
+      appBar: CustomAppBar(
+        tabController: _tabController,
+        tabs: const [
+          Tab(text: 'Favoritos'),
+        ],
       ),
       body: TabBarView(
         controller: _tabController,

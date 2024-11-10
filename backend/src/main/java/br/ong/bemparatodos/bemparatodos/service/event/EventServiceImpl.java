@@ -44,7 +44,7 @@ public class EventServiceImpl implements EventService {
   }
 
   private void checkAndSaveToMemory() {
-    if (isNull(eventRepository) || events.isEmpty()) {
+    if (isNull(events) || events.isEmpty()) {
       events = eventRepository
           .findAll()
           .stream()

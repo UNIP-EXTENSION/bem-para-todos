@@ -35,7 +35,7 @@ public class Event {
   @Column(name = "end_date", nullable = false)
   private Instant endDate;
 
-  @ManyToMany(fetch = FetchType.LAZY)
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "tb_event_file",
      joinColumns = @JoinColumn(name = "event_id"),
      inverseJoinColumns = @JoinColumn(name = "file_id"))

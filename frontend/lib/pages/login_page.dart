@@ -31,6 +31,10 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
+          // Camada semitransparente amarela sobre a imagem
+          Container(
+            color: Colors.black.withOpacity(0.5), // Amarelo bem fraco
+          ),
           // Conteúdo da tela de login
           Center(
             child: SingleChildScrollView(

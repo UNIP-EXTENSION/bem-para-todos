@@ -13,7 +13,7 @@ dependencies:
   logger: ^2.3.0
   http_interceptor: ^1.0.2
   http: ^0.13.3
-  flutter_native_splash: ^2.0.5 
+  flutter_native_splash: ^2.0.5
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
@@ -25,11 +25,10 @@ flutter:
   uses-material-design: true
 
   assets:
-    - lib/assets/images/logo-app.png
-    - lib/assets/images/logo-google.png
-    - lib/assets/images/background-login.png
-    - lib/assets/images/logo-login.png
-    - assets/images/splash-logo.png
+    - lib/assets/images/bars/
+    - lib/assets/images/inputs/
+    - lib/assets/images/
+    - assets/images/
 
 # Configuração para o flutter_launcher_icons
 flutter_launcher_icons:
@@ -45,6 +44,6 @@ flutter_launcher_icons:
 flutter_native_splash:
   android: true
   ios: true
-  web: false 
-  color: "#FFFAB6"  
-  image: assets/images/splash-logo.png  
+  web: false
+  color: "#FFFAB6"
+  image: assets/images/splash-logo.png

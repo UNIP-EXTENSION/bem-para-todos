@@ -8,6 +8,7 @@ class InputAuth extends StatefulWidget {
   final TextEditingController controller;
   final String value;
   final double marginBottom;
+  final String? imagePath;
 
   InputAuth({
     super.key,
@@ -17,6 +18,7 @@ class InputAuth extends StatefulWidget {
     required this.controller,
     required this.value,
     this.marginBottom = 22.0,
+    this.imagePath,
   });
 
   @override
@@ -50,28 +52,37 @@ class _InputAuthState extends State<InputAuth> {
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF6B6B6B).withOpacity(0.5), // Cor da sombra
-            spreadRadius: 2, // Alargamento da sombra
-            blurRadius: 2, // Desfoque da sombra
-            offset:
-                const Offset(0, 3), // Offset da sombra (horizontal, vertical)
+            color: const Color(0xFF6B6B6B).withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 2,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
-      child: Column(
-        children: [
-          TextFormField(
-            obscureText: widget.obscureText,
-            controller: widget.controller,
-            validator: valueValidator,
-            decoration: InputDecoration(
-              hintText: widget.hintText,
-              border: InputBorder.none,
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            ),
-          ),
-        ],
+      child: TextFormField(
+        obscureText: widget.obscureText,
+        controller: widget.controller,
+        validator: valueValidator,
+        decoration: InputDecoration(
+          hintText: widget.hintText,
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.symmetric(
+              horizontal: 20, vertical: 10), // Aumentando padding do conteúdo
+          // Condicional para adicionar a imagem se existir
+          prefixIcon: widget.imagePath != null
+              ? Padding(
+                  padding: const EdgeInsets.only(
+                      left: 12.0,
+                      right: 8.0), // Espaçamento entre a imagem e borda
+                  child: Image.asset(
+                    widget.imagePath!,
+                    width: 10, // Tamanho da imagem
+                    height: 10, // Tamanho da imagem
+                    fit: BoxFit.contain,
+                  ),
+                )
+              : null,
+        ),
       ),
     );
   }

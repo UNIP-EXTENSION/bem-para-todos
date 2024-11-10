@@ -39,7 +39,7 @@ class AlbumCard extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: const Color(0xFF065BF9),
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Text(

@@ -12,34 +12,102 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: onTap,
-      backgroundColor: const Color(0xFF0675F9), // Fundo azul explicitamente
-      selectedItemColor: const Color(0xFFFAB603), // Cor do item selecionado
-      unselectedItemColor: Colors.white, // Cor dos itens não selecionados
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
+    return Container(
+      height: 60,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Color(0xFF07274D),
+            Color(0xFF315988),
+            Color(0xFF07274D),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          label: 'Explorar',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.event),
-          label: 'Meus eventos',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
-          label: 'Favoritos',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle),
-          label: 'Perfil',
-        ),
-      ],
+      ),
+      child: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: onTap,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.transparent,
+        selectedItemColor:
+            const Color(0xFFFAB603), // Cor do item selecionado (amarelo)
+        unselectedItemColor: Colors.white, // Cor dos itens não selecionados
+        selectedFontSize: 0, // Esconde o texto de todos os itens
+        unselectedFontSize: 0, // Esconde o texto de todos os itens
+        items: [
+          BottomNavigationBarItem(
+            icon: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                currentIndex == 0 ? const Color(0xFFFAB603) : Colors.white,
+                BlendMode.srcIn,
+              ),
+              child: Image.asset(
+                'lib/assets/images/bars/home.png', // Substitua pelo caminho da sua imagem
+                height: 24,
+                width: 24,
+              ),
+            ),
+            label: '', // Removido o label
+          ),
+          BottomNavigationBarItem(
+            icon: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                currentIndex == 1 ? const Color(0xFFFAB603) : Colors.white,
+                BlendMode.srcIn,
+              ),
+              child: Image.asset(
+                'lib/assets/images/bars/search.png',
+                height: 24,
+                width: 24,
+              ),
+            ),
+            label: '', // Removido o label
+          ),
+          BottomNavigationBarItem(
+            icon: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                currentIndex == 2 ? const Color(0xFFFAB603) : Colors.white,
+                BlendMode.srcIn,
+              ),
+              child: Image.asset(
+                'lib/assets/images/bars/ticket-fill.png',
+                height: 55,
+                width: 55,
+              ),
+            ),
+            label: '', // Removido o label
+          ),
+          BottomNavigationBarItem(
+            icon: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                currentIndex == 3 ? const Color(0xFFFAB603) : Colors.white,
+                BlendMode.srcIn,
+              ),
+              child: Image.asset(
+                'lib/assets/images/bars/likes.png',
+                height: 24,
+                width: 24,
+              ),
+            ),
+            label: '', // Removido o label
+          ),
+          BottomNavigationBarItem(
+            icon: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                currentIndex == 4 ? const Color(0xFFFAB603) : Colors.white,
+                BlendMode.srcIn,
+              ),
+              child: Image.asset(
+                'lib/assets/images/bars/profile.png',
+                height: 24,
+                width: 24,
+              ),
+            ),
+            label: '', // Removido o label
+          ),
+        ],
+      ),
     );
   }
 }

@@ -53,6 +53,7 @@ class _LoginFormState extends State<LoginForm> {
           hintText: 'Digite seu e-mail',
           controller: _emailController,
           value: _emailController.text,
+          imagePath: 'lib/assets/images/inputs/email.png',
         ),
         // Campo de senha
         InputAuth(
@@ -61,6 +62,7 @@ class _LoginFormState extends State<LoginForm> {
           obscureText: true,
           controller: _passwordController,
           value: _passwordController.text,
+          imagePath: 'lib/assets/images/inputs/key.png',
           marginBottom: 6,
         ),
         // Link de Esqueceu a senha

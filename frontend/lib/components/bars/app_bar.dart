@@ -22,7 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
                 'lib/assets/images/logo-app.png',
-                height: 50,
+                height: 80,
               ),
             ),
             TabBar(

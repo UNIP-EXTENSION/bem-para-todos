@@ -46,7 +46,7 @@ public interface EventMapper {
     try {
       return new SerialBlob(data);
     } catch (SQLException e) {
-      throw new FileConvertException("Erro ao converter byte[] para Blob", e);
+      throw new RuntimeException("Failed to convert byte[] to Blob", e);
     }
   }
 
@@ -60,7 +60,9 @@ public interface EventMapper {
             file.getFileSize(),
             file.getDescription(),
             file.getUploadDate(),
-            blobToByteArray(file.getData())
+            blobToByteArray(file.getData()),
+            file.getUrlFile()
+
         ))
         .collect(Collectors.toList());
   }

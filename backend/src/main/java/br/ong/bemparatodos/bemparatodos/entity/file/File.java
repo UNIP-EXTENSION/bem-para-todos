@@ -28,8 +28,11 @@ public class File {
   private String description;
 
   @Lob
-  @Column(name = "data", nullable = false)
+  @Column(name = "data")
   private Blob data;
+
+  @Column(name = "url")
+  private String urlFile;
 
   @Column(name = "upload_date", nullable = false)
   private Instant uploadDate;
@@ -87,6 +90,18 @@ public class File {
 
   public Instant getUploadDate() {
     return uploadDate;
+  }
+
+  public String getUrlFile() {
+    return urlFile;
+  }
+
+  public void setUrlFile(String urlFile) {
+    this.urlFile = urlFile;
+  }
+
+  public void setUploadDate(Instant uploadDate) {
+    this.uploadDate = uploadDate;
   }
 
   @PrePersist

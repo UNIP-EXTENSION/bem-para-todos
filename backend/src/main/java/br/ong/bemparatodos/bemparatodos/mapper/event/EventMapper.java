@@ -22,10 +22,10 @@ import static java.util.Objects.requireNonNull;
 public interface EventMapper {
 
   @Mapping(target = "eventDetails", ignore = true)
-  @Mapping(target = "files", source = "files", qualifiedByName = "mapFilesToRecords")
+  //@Mapping(target = "files", source = "files", qualifiedByName = "mapFilesToRecords")
   EventRecord entitytoDto(Event entity);
 
-  @Mapping(target = "files", source = "files", qualifiedByName = "mapRecordsToFiles")
+  //@Mapping(target = "files", source = "files", qualifiedByName = "mapRecordsToFiles")
   Event dtoToEntity(EventRecord dto);
 
   @Named("blobToByteArray")
@@ -50,7 +50,7 @@ public interface EventMapper {
     }
   }
 
-  @Named("mapFilesToRecords")
+ /* @Named("mapFilesToRecords")
   default Collection<FileRecord> mapFilesToRecords(Collection<File> files) {
     return files.stream()
         .map(file -> new FileRecord(
@@ -81,6 +81,6 @@ public interface EventMapper {
           return file;
         })
         .collect(Collectors.toList());
-  }
+  }*/
 
 }

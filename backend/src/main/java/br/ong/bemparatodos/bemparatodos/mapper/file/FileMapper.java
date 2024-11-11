@@ -9,9 +9,7 @@ import org.mapstruct.Mapping;
 @Mapper(config = MapperConfiguration.class)
 public interface FileMapper {
 
-  @Mapping(target = "data", ignore = true)
   FileRecord entitytoDto(File entity);
 
-  @Mapping(target = "data", ignore = true)
   File dtoToEntity(FileRecord dto);
 }

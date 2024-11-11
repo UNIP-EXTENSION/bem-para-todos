@@ -27,8 +27,6 @@ public record FileRecord(
    @NotNull(message = "The upload date cannot be null")
    Instant uploadDate,
 
-   byte[] data,
-
    String urlFile
 ) {
 }

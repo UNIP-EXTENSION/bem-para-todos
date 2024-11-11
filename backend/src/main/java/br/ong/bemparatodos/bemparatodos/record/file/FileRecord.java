@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.sql.Blob;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -24,7 +25,9 @@ public record FileRecord(
    String description,
 
    @NotNull(message = "The upload date cannot be null")
-   Instant uploadDate
+   Instant uploadDate,
+
+   byte[] data
 
 ) {
 }

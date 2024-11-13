@@ -4,7 +4,7 @@ import 'package:http_interceptor/http_interceptor.dart';
 import 'dart:convert';
 
 class Crudservice {
-  static const String url = 'http://192.168.43.140:8080/';
+  static const String url = 'http://192.168.221.29:8080/';
   final String resource;
   Crudservice({required this.resource});
 
@@ -24,5 +24,31 @@ class Crudservice {
       return true;
     }
     return false;
+  }
+
+  //Realizar método GET
+  Future<List<Map<String, dynamic>>> getAll() async {
+    try {
+      final response = await client.get(Uri.parse(getUrl()));
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = json.decode(response.body);
+
+        List<dynamic> eventsData = data['content'];
+
+        List<Map<String, dynamic>> events = eventsData.map((event) {
+          return {
+            'name': event['name'],
+            'image': event['files'][0]['urlFile'],
+          };
+        }).toList();
+
+        return events;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      return [];
+    }
   }
 }

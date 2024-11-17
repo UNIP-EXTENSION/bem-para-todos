@@ -30,10 +30,9 @@ public class UserAuthServiceImpl implements UserAuthService {
 
   private final PasswordEncoder passwordEncoder;
 
-
   public UserAuthServiceImpl(final UserRepository userRepository, final PasswordEncoder passwordEncoder) {
-    this.userRepository = requireNonNull(userRepository);
-    this.passwordEncoder = requireNonNull(passwordEncoder);
+    this.userRepository = requireNonNull(userRepository, "userRepository cannot be null");
+    this.passwordEncoder = requireNonNull(passwordEncoder, "passwordEncoder cannot be null");
   }
 
   @Override

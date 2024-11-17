@@ -4,3 +4,10 @@ spring:
 
   jpa:
     open-in-view: false
+
+
+# MD5 ENCRYPT.
+security:
+  token:
+    bem-para-todos:
+      secret: c25f9c34e0c5a6c6633919fccb2540ad

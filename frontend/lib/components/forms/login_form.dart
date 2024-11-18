@@ -40,7 +40,6 @@ class _LoginFormState extends State<LoginForm> {
     return user.map();
   }
 
-  // Método para autenticar o usuário
   Future<void> _submitForm() async {
     setState(() {
       _isLoading = true;
@@ -50,14 +49,13 @@ class _LoginFormState extends State<LoginForm> {
     final email = _emailController.text;
     final password = _passwordController.text;
 
-    // Chamar o serviço de autenticação
-    final token = await _authService.login(email: email, password: password);
+    final success = await _authService.login(email: email, password: password);
 
     setState(() {
       _isLoading = false;
     });
 
-    if (token != null) {
+    if (success) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const MainScreen()),
@@ -96,9 +94,7 @@ class _LoginFormState extends State<LoginForm> {
         Align(
           alignment: Alignment.centerLeft,
           child: TextButton(
-            onPressed: () {
-              print('Esqueceu a senha');
-            },
+            onPressed: () {},
             child: const Text(
               'Esqueceu a senha?',
               style: TextStyle(color: Colors.white),

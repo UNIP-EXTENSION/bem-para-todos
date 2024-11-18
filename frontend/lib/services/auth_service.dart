@@ -1,12 +1,13 @@
 import 'dart:convert';
+import 'package:frontend/components/storages/auth_storage.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
   static const String _baseUrl = 'http://192.168.229.97:8080/auth';
+  final AuthStorage _authStorage = AuthStorage();
 
   // Método para autenticar o usuário
-  Future<String?> login(
-      {required String email, required String password}) async {
+  Future<bool> login({required String email, required String password}) async {
     try {
       final response = await http.post(
         Uri.parse(_baseUrl),
@@ -19,13 +20,29 @@ class AuthService {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        return data['access_token'];
+        String token = data['access_token'];
+
+        // Salvar o token para uso futuro
+        await _authStorage.saveToken(token);
+        return true;
       } else {
-        return null;
+        print('Falha no login: ${response.statusCode}');
+        return false;
       }
     } catch (e) {
       print('Erro ao realizar login: $e');
-      return null;
+      return false;
     }
+  }
+
+  // Método para verificar se o usuário está autenticado
+  Future<bool> isLoggedIn() async {
+    final token = await _authStorage.getToken();
+    return token != null;
+  }
+
+  // Método para logout
+  Future<void> logout() async {
+    await _authStorage.removeToken();
   }
 }

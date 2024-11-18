@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/components/bars/bottom_nav_bar.dart';
 import 'package:frontend/screens/explorer_screen.dart';
 import 'package:frontend/screens/favorites_screen.dart';
-import 'package:frontend/screens/home_screen.dart';
+import 'package:frontend/screens/home/home_screen.dart';
 import 'package:frontend/screens/myevents_screen.dart';
 import 'package:frontend/screens/profile_screen.dart'; // Importe seu bottom nav bar
 
@@ -18,11 +18,11 @@ class _MainScreenState extends State<MainScreen> {
   final PageController _pageController = PageController();
 
   final List<Widget> _pages = [
-    HomeScreen(),
-    ExplorerScreen(),
-    MyEventsScreen(),
-    FavoriteScreen(),
-    ProfileScreen()
+    const HomeScreen(),
+    const ExplorerScreen(),
+    const MyEventsScreen(),
+    const FavoriteScreen(),
+    const ProfileScreen()
     // Outras páginas podem ser adicionadas aqui
   ];
 

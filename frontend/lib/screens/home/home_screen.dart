@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/components/bars/app_bar.dart';
-import 'package:frontend/services/crudService/CrudService.dart';
-import 'package:frontend/views/home/event_view.dart';
-import 'package:frontend/views/home/gallery_view.dart';
+import 'package:frontend/services/CrudService.dart';
+import 'package:frontend/screens/home/views/event_view.dart';
+import 'package:frontend/screens/home/views/gallery_view.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

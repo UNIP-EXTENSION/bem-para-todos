@@ -4,7 +4,7 @@ import 'package:frontend/components/inputs/input-auth.dart';
 import 'package:frontend/components/buttons/button-google.dart';
 import 'package:frontend/helpers/situation-alerts.dart';
 import 'package:frontend/models/User/User.dart';
-import 'package:frontend/services/crudService/CrudService.dart';
+import 'package:frontend/services/CrudService.dart';
 
 class AuthForm extends StatefulWidget {
   // ignore: use_key_in_widget_constructors

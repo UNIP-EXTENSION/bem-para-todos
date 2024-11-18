@@ -4,6 +4,7 @@ import 'package:frontend/components/buttons/button-google.dart';
 import 'package:frontend/components/inputs/input-auth.dart';
 import 'package:frontend/models/User/User.dart';
 import 'package:frontend/pages/main_page.dart';
+import 'package:frontend/services/auth_service.dart';
 
 class LoginForm extends StatefulWidget {
   final Function onNavigateToAuthPage;
@@ -20,6 +21,10 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final AuthService _authService = AuthService();
+
+  bool _isLoading = false;
+  String? _errorMessage;
 
   Map<String, dynamic> mapController() {
     Map<String, String> map = {
@@ -35,11 +40,33 @@ class _LoginFormState extends State<LoginForm> {
     return user.map();
   }
 
-  void _submitForm() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => MainScreen()),
-    );
+  // Método para autenticar o usuário
+  Future<void> _submitForm() async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    final email = _emailController.text;
+    final password = _passwordController.text;
+
+    // Chamar o serviço de autenticação
+    final token = await _authService.login(email: email, password: password);
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (token != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const MainScreen()),
+      );
+    } else {
+      setState(() {
+        _errorMessage = 'Falha no login. Verifique suas credenciais.';
+      });
+    }
   }
 
   @override
@@ -80,10 +107,12 @@ class _LoginFormState extends State<LoginForm> {
         ),
         const SizedBox(height: 6),
         // Botão de Entrar
-        ButtonAuth(
-          text: 'Entrar',
-          onPressed: _submitForm,
-        ),
+        _isLoading
+            ? const CircularProgressIndicator()
+            : ButtonAuth(
+                text: 'Entrar',
+                onPressed: _submitForm,
+              ),
         const SizedBox(height: 16),
         // Botão do Google
         const ButtonGoogle(
@@ -113,6 +142,13 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
         ),
+        if (_errorMessage != null) ...[
+          const SizedBox(height: 10),
+          Text(
+            _errorMessage!,
+            style: const TextStyle(color: Colors.red),
+          ),
+        ],
       ],
     );
   }

@@ -4,7 +4,7 @@ import 'package:http_interceptor/http_interceptor.dart';
 import 'dart:convert';
 
 class Crudservice {
-  static const String url = 'http://192.168.221.29:8080/';
+  static const String url = 'http://192.168.229.97:8080/';
   final String resource;
   Crudservice({required this.resource});
 

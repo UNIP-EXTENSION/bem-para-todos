@@ -1,3 +1,4 @@
+import 'package:frontend/components/storages/auth_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:frontend/services/interceptors/http_interceptors.dart';
 import 'package:http_interceptor/http_interceptor.dart';
@@ -5,6 +6,7 @@ import 'dart:convert';
 
 class Crudservice {
   static const String url = 'http://192.168.229.97:8080/';
+  final AuthStorage _authStorage = AuthStorage();
   final String resource;
   Crudservice({required this.resource});
 
@@ -29,7 +31,18 @@ class Crudservice {
   //Realizar método GET
   Future<List<Map<String, dynamic>>> getAll() async {
     try {
-      final response = await client.get(Uri.parse(getUrl()));
+      String? token = await _authStorage.getToken();
+      if (token == null) {
+        throw Exception('Token não encontrado');
+      }
+
+      final response = await client.get(
+        Uri.parse(getUrl()),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-type': 'application/json'
+        },
+      );
 
       if (response.statusCode == 200) {
         Map<String, dynamic> data = json.decode(response.body);

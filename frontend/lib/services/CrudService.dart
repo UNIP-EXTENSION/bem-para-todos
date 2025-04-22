@@ -2,10 +2,11 @@ import 'package:frontend/components/storages/auth_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:frontend/services/interceptors/http_interceptors.dart';
 import 'package:http_interceptor/http_interceptor.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
 
 class Crudservice {
-  static const String url = 'http://192.168.229.97:8080/';
+  final String url = '${dotenv.env['BASE_URL']}/';
   final AuthStorage _authStorage = AuthStorage();
   final String resource;
   Crudservice({required this.resource});

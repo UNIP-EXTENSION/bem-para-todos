@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:frontend/components/storages/auth_storage.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
-  static const String _baseUrl = 'http://192.168.229.97:8080/auth';
+  final String _baseUrl = '${dotenv.env['BASE_URL']}/auth';
   final AuthStorage _authStorage = AuthStorage();
 
   // Método para autenticar o usuário

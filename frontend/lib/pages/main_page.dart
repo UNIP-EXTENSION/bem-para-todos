@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/components/bars/bottom_nav_bar.dart';
-import 'package:frontend/screens/explorer_screen.dart';
-import 'package:frontend/screens/favorites_screen.dart';
 import 'package:frontend/screens/home/home_screen.dart';
 import 'package:frontend/screens/myevents_screen.dart';
-import 'package:frontend/screens/profile_screen.dart'; // Importe seu bottom nav bar
+import 'package:frontend/screens/profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -19,18 +17,15 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _pages = [
     const HomeScreen(),
-    const ExplorerScreen(),
     const MyEventsScreen(),
-    const FavoriteScreen(),
     const ProfileScreen()
-    // Outras páginas podem ser adicionadas aqui
   ];
 
   void _onBottomNavBarTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-    _pageController.jumpToPage(index); // Alterna entre as páginas principais
+    _pageController.jumpToPage(index);
   }
 
   @override

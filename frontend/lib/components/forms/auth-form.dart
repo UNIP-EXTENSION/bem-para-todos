@@ -4,10 +4,10 @@ import 'package:frontend/components/inputs/input-auth.dart';
 import 'package:frontend/components/buttons/button-google.dart';
 import 'package:frontend/helpers/situation-alerts.dart';
 import 'package:frontend/models/User/User.dart';
+import 'package:frontend/pages/login_page.dart';
 import 'package:frontend/services/CrudService.dart';
 
 class AuthForm extends StatefulWidget {
-  // ignore: use_key_in_widget_constructors
   const AuthForm({Key? key});
 
   @override
@@ -37,11 +37,18 @@ class _AuthFormState extends State<AuthForm> {
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      // Form is valid, proceed with further actions
       waitingAlert(context);
-      Crudservice(resource: "users").post(map: mapUser()).then((value) {
+      Crudservice(resource: "users").post(map: mapUser()).then((value) async {
         Navigator.pop(context);
-        sucessAlert(context);
+
+        await alertSucessMessage(context, "Usuário cadastrado!");
+
+        if (context.mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginPage()),
+          );
+        }
       });
     }
   }

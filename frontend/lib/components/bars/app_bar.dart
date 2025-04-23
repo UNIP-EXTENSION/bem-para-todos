@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final TabController tabController;
-  final List<Tab> tabs;
+  final TabController? tabController;
+  final List<Tab>? tabs;
 
   const CustomAppBar({
     super.key,
-    required this.tabController,
-    required this.tabs,
+    this.tabController,
+    this.tabs,
   });
 
   @override
   Widget build(BuildContext context) {
+    final hasTabs = tabController != null && tabs != null;
+
     return AppBar(
       backgroundColor: const Color(0xFFFAB603),
       bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(100),
+        preferredSize:
+            hasTabs ? const Size.fromHeight(100) : const Size.fromHeight(50),
         child: Column(
           children: [
             Padding(
@@ -25,20 +28,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 height: 80,
               ),
             ),
-            TabBar(
-              controller: tabController,
-              tabs: tabs,
-              labelColor: Colors.white,
-              unselectedLabelColor: Colors.white,
-              indicatorColor: const Color(0xFF6B6B6B),
-              indicatorSize: TabBarIndicatorSize.label,
-              indicatorWeight: 4.0,
-              indicatorPadding: EdgeInsets.zero,
-              labelStyle: const TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
+            if (hasTabs)
+              TabBar(
+                controller: tabController,
+                tabs: tabs!,
+                labelColor: Colors.white,
+                unselectedLabelColor: Colors.white,
+                indicatorColor: const Color(0xFF6B6B6B),
+                indicatorSize: TabBarIndicatorSize.label,
+                indicatorWeight: 4.0,
+                indicatorPadding: EdgeInsets.zero,
+                labelStyle: const TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
           ],
         ),
       ),
@@ -46,5 +50,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 100);
+  Size get preferredSize {
+    final hasTabs = tabController != null && tabs != null;
+
+    return hasTabs
+        ? const Size.fromHeight(kToolbarHeight + 100)
+        : const Size.fromHeight(kToolbarHeight + 50);
+  }
 }

@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 class ButtonAuth extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
+  final Color? color;
+  final double fontSize;
+  final bool isGradient;
 
   const ButtonAuth({
     super.key,
     required this.text,
     required this.onPressed,
+    this.color,
+    this.fontSize = 20.0,
+    this.isGradient = true,
   });
 
   @override
@@ -17,9 +23,12 @@ class ButtonAuth extends StatelessWidget {
       width: double.infinity,
       child: Container(
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFF0673F9), Color(0xFF044493)],
-          ),
+          gradient: isGradient
+              ? const LinearGradient(
+                  colors: [Color(0xFF0673F9), Color(0xFF044493)],
+                )
+              : null,
+          color: !isGradient ? color : null,
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
@@ -36,9 +45,9 @@ class ButtonAuth extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             foregroundColor: Colors.white,
             backgroundColor: Colors.transparent,
-            textStyle: const TextStyle(
+            textStyle: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 20,
+              fontSize: fontSize,
             ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),

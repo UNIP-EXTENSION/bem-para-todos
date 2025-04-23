@@ -24,8 +24,7 @@ alertDialog(BuildContext context,
                 })));
     actions.add(confirmationButton);
   }
-  //A variável bool secondBbutton foi criada para poder reutilizar o alert para validacoes
-  //e para alert de sucesso, onde o primeiro precisa de um botao de cancelar e o segundo nao
+
   if (secondButton) {
     Widget cancelButton = PopScope(
         canPop: false,
@@ -38,7 +37,8 @@ alertDialog(BuildContext context,
                 })));
     actions.add(cancelButton);
   }
-  //configura o AlertDialog
+
+  // Configura o AlertDialog
   AlertDialog alert = AlertDialog(
     backgroundColor: Colors.white,
     content: Column(
@@ -66,10 +66,16 @@ alertDialog(BuildContext context,
         ]),
     actions: actions,
   );
-  //exibe o diálogo
-  return await showDialog(
+
+  showDialog(
     barrierDismissible: false,
     context: context,
     builder: (BuildContext context) => alert,
   );
+
+  await Future.delayed(const Duration(seconds: 2));
+
+  if (context.mounted) {
+    Navigator.pop(context);
+  }
 }

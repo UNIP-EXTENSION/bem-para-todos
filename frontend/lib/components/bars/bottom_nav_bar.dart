@@ -50,20 +50,20 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
             label: '', // Removido o label
           ),
-          BottomNavigationBarItem(
-            icon: ColorFiltered(
-              colorFilter: ColorFilter.mode(
-                currentIndex == 1 ? const Color(0xFFFAB603) : Colors.white,
-                BlendMode.srcIn,
-              ),
-              child: Image.asset(
-                'lib/assets/images/bars/search.png',
-                height: 24,
-                width: 24,
-              ),
-            ),
-            label: '', // Removido o label
-          ),
+          // BottomNavigationBarItem(
+          //   icon: ColorFiltered(
+          //     colorFilter: ColorFilter.mode(
+          //       currentIndex == 1 ? const Color(0xFFFAB603) : Colors.white,
+          //       BlendMode.srcIn,
+          //     ),
+          //     child: Image.asset(
+          //       'lib/assets/images/bars/search.png',
+          //       height: 24,
+          //       width: 24,
+          //     ),
+          //   ),
+          //   label: '', // Removido o label
+          // ),
           BottomNavigationBarItem(
             icon: ColorFiltered(
               colorFilter: ColorFilter.mode(
@@ -78,20 +78,20 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
             label: '', // Removido o label
           ),
-          BottomNavigationBarItem(
-            icon: ColorFiltered(
-              colorFilter: ColorFilter.mode(
-                currentIndex == 3 ? const Color(0xFFFAB603) : Colors.white,
-                BlendMode.srcIn,
-              ),
-              child: Image.asset(
-                'lib/assets/images/bars/likes.png',
-                height: 24,
-                width: 24,
-              ),
-            ),
-            label: '', // Removido o label
-          ),
+          // BottomNavigationBarItem(
+          //   icon: ColorFiltered(
+          //     colorFilter: ColorFilter.mode(
+          //       currentIndex == 3 ? const Color(0xFFFAB603) : Colors.white,
+          //       BlendMode.srcIn,
+          //     ),
+          //     child: Image.asset(
+          //       'lib/assets/images/bars/likes.png',
+          //       height: 24,
+          //       width: 24,
+          //     ),
+          //   ),
+          //   label: '', // Removido o label
+          // ),
           BottomNavigationBarItem(
             icon: ColorFiltered(
               colorFilter: ColorFilter.mode(

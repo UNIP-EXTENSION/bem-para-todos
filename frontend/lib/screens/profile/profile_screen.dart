@@ -3,6 +3,7 @@ import 'package:frontend/components/bars/app_bar.dart';
 import 'package:frontend/components/buttons/button_auth.dart';
 import 'package:frontend/helpers/situation-alerts.dart';
 import 'package:frontend/pages/login_page.dart';
+import 'package:frontend/screens/profile/views/edit_profile_page.dart';
 import 'package:frontend/services/auth_service.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -94,7 +95,11 @@ class _ProfileScreen extends State<ProfileScreen>
                     text: 'Editar Dados',
                     fontSize: 16.0,
                     onPressed: () {
-                      print('Editar Dados');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const EditProfilePage()),
+                      );
                     },
                     isGradient: false,
                     color: const Color(0xFF0675F9),

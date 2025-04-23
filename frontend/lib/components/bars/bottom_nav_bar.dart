@@ -67,7 +67,7 @@ class CustomBottomNavBar extends StatelessWidget {
           BottomNavigationBarItem(
             icon: ColorFiltered(
               colorFilter: ColorFilter.mode(
-                currentIndex == 2 ? const Color(0xFFFAB603) : Colors.white,
+                currentIndex == 1 ? const Color(0xFFFAB603) : Colors.white,
                 BlendMode.srcIn,
               ),
               child: Image.asset(
@@ -95,7 +95,7 @@ class CustomBottomNavBar extends StatelessWidget {
           BottomNavigationBarItem(
             icon: ColorFiltered(
               colorFilter: ColorFilter.mode(
-                currentIndex == 4 ? const Color(0xFFFAB603) : Colors.white,
+                currentIndex == 2 ? const Color(0xFFFAB603) : Colors.white,
                 BlendMode.srcIn,
               ),
               child: Image.asset(

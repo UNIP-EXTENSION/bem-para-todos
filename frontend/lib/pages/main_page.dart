@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/components/bars/bottom_nav_bar.dart';
 import 'package:frontend/screens/home/home_screen.dart';
 import 'package:frontend/screens/myevents_screen.dart';
-import 'package:frontend/screens/profile_screen.dart';
+import 'package:frontend/screens/profile/profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

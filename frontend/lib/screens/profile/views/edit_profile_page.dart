@@ -1,34 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/components/forms/edit_profile_form.dart';
 
-class EditProfilePage extends StatelessWidget {
+class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
+
+  @override
+  _EditProfilePage createState() => _EditProfilePage();
+}
+
+class _EditProfilePage extends State<EditProfilePage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 1, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Editar Perfil')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextFormField(
-              initialValue: 'Nome do Usuário',
-              decoration: const InputDecoration(labelText: 'Nome'),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 28),
+        color: const Color(0xFFFAB603),
+        child: const Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                EditProfileForm(),
+              ],
             ),
-            const SizedBox(height: 16),
-            TextFormField(
-              initialValue: 'email@dominio.com',
-              decoration: const InputDecoration(labelText: 'Email'),
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () {
-                // Aqui você pode salvar os dados
-                Navigator.pop(context); // Volta para a tela anterior
-              },
-              child: const Text('Salvar'),
-            ),
-          ],
+          ),
         ),
       ),
     );

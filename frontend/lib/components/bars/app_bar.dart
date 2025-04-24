@@ -25,7 +25,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
                 'lib/assets/images/logo-app.png',
-                height: 80,
+                height: 60,
               ),
             ),
             if (hasTabs)
@@ -54,7 +54,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final hasTabs = tabController != null && tabs != null;
 
     return hasTabs
-        ? const Size.fromHeight(kToolbarHeight + 100)
-        : const Size.fromHeight(kToolbarHeight + 50);
+        ? const Size.fromHeight(kToolbarHeight + 75)
+        : const Size.fromHeight(kToolbarHeight + 25);
   }
 }

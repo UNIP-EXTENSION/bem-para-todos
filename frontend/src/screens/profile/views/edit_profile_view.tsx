@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, ScrollView, Image, Text } from "react-native";
+import { View, StyleSheet, ScrollView, } from "react-native";
 import EditProfileForm from "../../../components/forms/EditProfileForm";
 import BottomNavBar from "../../../components/bars/bottom_nav_bar";
 import { useNavigation } from "@react-navigation/native";

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import TopBar from "../../components/bars/top_bar";
 import ButtonAuth from "../../components/buttons/ButtonAuth";
@@ -11,12 +11,38 @@ const authService = new AuthService();
 const ProfileScreen = () => {
   const navigation = useNavigation<NavigationProp>();
 
+  const [userName, setUserName] = useState<string>("");
+  const [userEmail, setUserEmail] = useState<string>("");
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      try {
+        const userInfo = await authService.getUserInfo();
+
+        if (userInfo) {
+          setUserName(userInfo.name);
+          setUserEmail(userInfo.email);
+        } else {
+          authService.logout();
+          navigation.replace("Login");
+        }
+      } catch (error) {
+        authService.logout();
+        navigation.replace("Login");
+      }
+    };
+
+    getUserInfo();
+  }, []);
+
   const onTicketsPress = useCallback(async () => {
     console.log("Botão Meus Ingressos pressionado");
   }, []);
 
   const handleLogoutPress = useCallback(async () => {
-    authService.logout()
+    authService.logout();
 
     navigation.replace("Login");
   }, []);
@@ -38,8 +64,8 @@ const ProfileScreen = () => {
             />
           </View>
           <View style={styles.userInfoText}>
-            <Text style={styles.userNameText}>abner pereira</Text>
-            <Text style={styles.userEmailText}>abner@gmail.com</Text>
+            <Text style={styles.userNameText}>{userName || "..."}</Text>
+            <Text style={styles.userEmailText}>{userEmail || "..."}</Text>
           </View>
         </View>
 

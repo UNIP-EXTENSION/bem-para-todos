@@ -3,6 +3,7 @@ package br.ong.bemparatodos.bemparatodos.config.security;
 import br.ong.bemparatodos.bemparatodos.security.filter.SecurityUserFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -36,7 +37,7 @@ public class SecurityConfig {
   protected SecurityFilterChain securityFilterChain(final HttpSecurity httpSecurity) throws Exception {
     httpSecurity.csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(auth -> {
-          auth.requestMatchers("/users").permitAll()
+          auth.requestMatchers(HttpMethod.POST,"/users").permitAll()
               .requestMatchers("/auth").permitAll()
               .requestMatchers("/users/update/**").permitAll();
           auth.anyRequest().authenticated();

@@ -16,7 +16,7 @@ const ProfileScreen = () => {
   }, []);
 
   const handleLogoutPress = useCallback(async () => {
-    authService.logout
+    authService.logout()
 
     navigation.replace("Login");
   }, []);

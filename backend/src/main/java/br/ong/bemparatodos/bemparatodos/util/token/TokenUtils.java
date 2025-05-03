@@ -18,10 +18,8 @@ public final class TokenUtils {
     try {
       final byte[] encodedBytes = Base64.getEncoder().encode(input.getBytes(StandardCharsets.UTF_8));
       String encodedString = new String(encodedBytes, StandardCharsets.UTF_8);
-      log.info("Encoding string: {}", encodedString);
       return encodedString;
     } catch (Exception e) {
-      log.error("Error encoding string: {}", e.getMessage());
       throw new RuntimeException("Error while encoding string", e);
     }
   }

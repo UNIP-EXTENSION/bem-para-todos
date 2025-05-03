@@ -3,12 +3,13 @@ package br.ong.bemparatodos.bemparatodos.service.user;
 import br.ong.bemparatodos.bemparatodos.entity.user.User;
 import br.ong.bemparatodos.bemparatodos.mapper.user.UserInsertMapper;
 import br.ong.bemparatodos.bemparatodos.mapper.user.UserMapper;
-import br.ong.bemparatodos.bemparatodos.record.event.DressCodeRecord;
 import br.ong.bemparatodos.bemparatodos.record.user.UserInsertRecord;
 import br.ong.bemparatodos.bemparatodos.record.user.UserRecord;
+import br.ong.bemparatodos.bemparatodos.record.user.UserUpdateRecord;
 import br.ong.bemparatodos.bemparatodos.repository.user.RoleRepository;
 import br.ong.bemparatodos.bemparatodos.repository.user.UserRepository;
 import br.ong.bemparatodos.bemparatodos.service.exception.resource.ResourceInvalidException;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -40,7 +41,12 @@ public class UserServiceImpl implements UserService {
   private final RoleRepository roleRepository;
 
   @Autowired
-  public UserServiceImpl(final UserRepository userRepository, final UserInsertMapper userInsertMapper, RoleRepository repository, UserMapper userMapper, RoleRepository roleRepository) {
+  public UserServiceImpl(
+      final UserRepository userRepository,
+      final UserInsertMapper userInsertMapper,
+      final RoleRepository repository,
+      final UserMapper userMapper,
+      final RoleRepository roleRepository) {
     this.userRepository = userRepository;
     this.userInsertMapper = userInsertMapper;
     this.repository = repository;
@@ -50,9 +56,15 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public Page<UserInsertRecord> findAllPaged(Pageable pageable) {
-    Page<User> userPage = userRepository.findAll(pageable);
-    Set<UserInsertRecord> userInsertRecords = userPage.getContent().stream().map(userInsertMapper::entitytoRecord).collect(Collectors.toSet());
-    return new PageImpl<>(new ArrayList<>(userInsertRecords), pageable, userPage.getTotalElements());
+    final Page<User> userPage = userRepository.findAll(pageable);
+    final Set<UserInsertRecord> userInsertRecords = userPage
+        .getContent()
+        .stream()
+        .map(userInsertMapper::entitytoRecord)
+        .collect(Collectors.toSet());
+
+    return new PageImpl<>(
+        new ArrayList<>(userInsertRecords), pageable, userPage.getTotalElements());
   }
 
   @Override
@@ -61,7 +73,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserInsertRecord save(@Valid UserInsertRecord entity) {
+  public UserInsertRecord save(@Valid final UserInsertRecord entity) {
     User user = userInsertMapper.recordToEntity(entity);
 
     user.getRoles()
@@ -73,7 +85,8 @@ public class UserServiceImpl implements UserService {
     if (nonNull(entity.id()))
       throw new ResourceInvalidException("The provided resource has an ID and cannot be created.");
 
-    String password = new BCryptPasswordEncoder().encode(user.getPassword());
+    final String password = new BCryptPasswordEncoder()
+        .encode(user.getPassword());
     user.setPassword(password);
 
     user = userRepository.save(user);
@@ -81,12 +94,40 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserInsertRecord update(UUID uuid, UserInsertRecord entity) {
+  public UserInsertRecord update(final UUID uuid, UserInsertRecord entity) {
     return null;
   }
 
+  @Transactional
   @Override
-  public void delete(UUID uuid) {
+  public Map<String, Object> updatePartially(final UUID uuid, final UserInsertRecord record) {
+
+    String encodedPassword = null;
+    if (record.password() != null) {
+      encodedPassword = new BCryptPasswordEncoder().encode(record.password());
+    }
+
+    final int updatedRows = userRepository.updateUserPartially(
+        uuid,
+        record.firstName(),
+        record.lastName(),
+        record.email(),
+        encodedPassword
+    );
+
+    if (updatedRows == 0) {
+      throw new ResourceInvalidException("User not found");
+    }
+
+    final Map<String, Object> updatedFields = userInsertMapper.toUpdatedFieldsMap(record);
+    if (nonNull(encodedPassword)) {
+      updatedFields.put("password", encodedPassword);
+    }
+    return updatedFields;
+  }
+
+  @Override
+  public void delete(final UUID uuid) {
 
   }
 }

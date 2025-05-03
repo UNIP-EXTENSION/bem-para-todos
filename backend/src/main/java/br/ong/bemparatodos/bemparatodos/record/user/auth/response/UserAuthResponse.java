@@ -13,6 +13,9 @@ public record UserAuthResponse(
     Long expireIn,
 
     @JsonProperty("roles")
-    Set<String> roles
+    Set<String> roles,
+
+    @JsonProperty("userInfo")
+    UserInfoResponse userInfo
 ) {
 }

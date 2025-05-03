@@ -15,16 +15,16 @@ public class User {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @Column(nullable = false)
+  @Column(name = "first_name", nullable = false)
   private String firstName;
 
-  @Column(nullable = false)
+  @Column(name = "last_name", nullable = false)
   private String lastName;
 
   @Column(unique = true)
   private String email;
 
-  @Column(nullable = false)
+  @Column(name = "password", nullable = false)
   private String password;
 
   @ManyToMany(fetch = FetchType.EAGER)
@@ -86,6 +86,10 @@ public class User {
 
   public Set<Role> getRoles() {
     return roles;
+  }
+
+  public void setRoles(Set<Role> roles) {
+    this.roles = roles;
   }
 
   @Override

@@ -4,8 +4,10 @@ import br.ong.bemparatodos.bemparatodos.entity.user.Role;
 import br.ong.bemparatodos.bemparatodos.entity.user.User;
 import br.ong.bemparatodos.bemparatodos.record.user.auth.request.UserAuthRequest;
 import br.ong.bemparatodos.bemparatodos.record.user.auth.response.UserAuthResponse;
+import br.ong.bemparatodos.bemparatodos.record.user.auth.response.UserInfoResponse;
 import br.ong.bemparatodos.bemparatodos.repository.user.UserRepository;
 import br.ong.bemparatodos.bemparatodos.service.user.auth.UserAuthService;
+import br.ong.bemparatodos.bemparatodos.util.token.TokenUtils;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
@@ -57,13 +60,28 @@ public class UserAuthServiceImpl implements UserAuthService {
         .withExpiresAt(expireIn)
         .sign(algorithm);
 
+    final UserInfoResponse userInfoResponse =
+        userInfoEncoded(
+            user.getId(),
+            user.getFirstName(),
+            user.getEmail());
+
     return new UserAuthResponse(
         token,
         expireIn.toEpochMilli(),
         user.getRoles()
             .stream()
             .map(Role::getAuthority)
-            .collect(Collectors.toSet())
+            .collect(Collectors.toSet()),
+        userInfoResponse
+    );
+  }
+
+  private UserInfoResponse userInfoEncoded(final UUID uuid, final String name, final String email) {
+    return new UserInfoResponse(
+        uuid,
+        TokenUtils.encode(name),
+        TokenUtils.encode(email)
     );
   }
 }

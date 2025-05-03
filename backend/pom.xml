@@ -34,6 +34,7 @@
 		<java.version>21</java.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<springdoc-openapi-starter-webmvc-ui.version>2.3.0</springdoc-openapi-starter-webmvc-ui.version>
+		<lombok.version>1.18.38</lombok.version>
 	</properties>
 
 	<dependencies>
@@ -102,6 +103,13 @@
 			<version>4.4.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<!-- dependency for test -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -148,6 +156,11 @@
 							<groupId>org.mapstruct</groupId>
 							<artifactId>mapstruct-processor</artifactId>
 							<version>${mapstruct.version}</version>
+						</path>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>

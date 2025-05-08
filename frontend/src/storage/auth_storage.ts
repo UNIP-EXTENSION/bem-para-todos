@@ -1,33 +1,42 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthSession } from "./types";
 
 export class AuthStorage {
-  private static tokenKey = "auth_token";
+  private static sessionKey = "auth_session";
 
-  // Salvar o token JWT
-  static async saveToken(token: string): Promise<void> {
+  // Salvar a sessão completa
+  static async saveSession(session: AuthSession): Promise<void> {
     try {
-      await AsyncStorage.setItem(AuthStorage.tokenKey, token);
+      const jsonValue = JSON.stringify(session);
+      await AsyncStorage.setItem(AuthStorage.sessionKey, jsonValue);
     } catch (error) {
-      console.error("Erro ao salvar token:", error);
+      console.error("Erro ao salvar sessão:", error);
     }
   }
 
-  // Recuperar o token JWT
-  static async getToken(): Promise<string | null> {
+  // Recuperar a sessão
+  static async getSession(): Promise<AuthSession | null> {
     try {
-      return await AsyncStorage.getItem(AuthStorage.tokenKey);
+      const jsonValue = await AsyncStorage.getItem(AuthStorage.sessionKey);
+      return jsonValue ? JSON.parse(jsonValue) : null;
     } catch (error) {
-      console.error("Erro ao obter token:", error);
+      console.error("Erro ao obter sessão:", error);
       return null;
     }
   }
 
-  // Remover o token JWT (logout)
-  static async removeToken(): Promise<void> {
+  // Remover a sessão (logout)
+  static async removeSession(): Promise<void> {
     try {
-      await AsyncStorage.removeItem(AuthStorage.tokenKey);
+      await AsyncStorage.removeItem(AuthStorage.sessionKey);
     } catch (error) {
-      console.error("Erro ao remover token:", error);
+      console.error("Erro ao remover sessão:", error);
     }
+  }
+
+  // Recuperar o token
+  static async getToken(): Promise<string | null> {
+    const session = await AuthStorage.getSession();
+    return session?.token ?? null;
   }
 }

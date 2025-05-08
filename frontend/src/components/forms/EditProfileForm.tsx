@@ -41,7 +41,7 @@ const EditProfileForm: React.FC = () => {
     }
 
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images'],
+      mediaTypes: ["images"],
       quality: 1,
     });
 
@@ -76,6 +76,11 @@ const EditProfileForm: React.FC = () => {
             placeholder: "Digite seu nome",
           },
           {
+            name: "sobrenome",
+            label: "Digite seu Sobrenome",
+            placeholder: "Digite seu Sobrenome",
+          },
+          {
             name: "email",
             label: "E-mail",
             placeholder: "E-mail",
@@ -86,18 +91,6 @@ const EditProfileForm: React.FC = () => {
             label: "Confirme seu e-mail",
             placeholder: "Confirme seu e-mail",
             keyboardType: "email-address",
-          },
-          {
-            name: "password",
-            label: "Digite sua senha",
-            placeholder: "Sua senha",
-            secureTextEntry: true,
-          },
-          {
-            name: "confirmPassword",
-            label: "Confirme sua senha",
-            placeholder: "Confirme sua senha",
-            secureTextEntry: true,
           },
         ].map(({ name, label, placeholder, ...rest }) => (
           <View key={name} style={styles.inputContainer}>

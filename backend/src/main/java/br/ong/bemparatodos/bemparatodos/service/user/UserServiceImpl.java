@@ -20,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -72,6 +73,10 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserInsertRecord save(@Valid final UserInsertRecord entity) {
     User user = userInsertMapper.recordToEntity(entity);
+    
+    if(user.getRoles() == null) {
+    	user.setRoles(new HashSet<>());
+    }
 
     user.getRoles()
         .forEach(role -> roleRepository.findByAuthority(role.getAuthority())

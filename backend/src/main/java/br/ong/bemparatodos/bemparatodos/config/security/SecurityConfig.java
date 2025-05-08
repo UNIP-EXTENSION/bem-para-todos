@@ -20,17 +20,6 @@ public class SecurityConfig {
     this.securityFilter = securityFilter;
   }
 
-  /*@Bean
-  protected SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
-    security.csrf(AbstractHttpConfigurer::disable)
-       .headers(HeadersConfigurer::disable)
-       .authorizeHttpRequests(auth -> {
-         auth.requestMatchers("/users").permitAll();
-         auth.requestMatchers("/auth").permitAll();
-       });
-
-    return security.build();
-  }*/
 
   @Bean
   protected SecurityFilterChain securityFilterChain(final HttpSecurity httpSecurity) throws Exception {
@@ -38,7 +27,8 @@ public class SecurityConfig {
         .authorizeHttpRequests(auth -> {
           auth.requestMatchers("/users").permitAll()
               .requestMatchers("/auth").permitAll()
-              .requestMatchers("/users/update/**").permitAll();
+              .requestMatchers("/users/update/**").permitAll()
+              .requestMatchers("/users/find/**").permitAll();
           auth.anyRequest().authenticated();
         })
         .addFilterBefore(securityFilter, BasicAuthenticationFilter.class);

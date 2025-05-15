@@ -27,7 +27,8 @@ public class SecurityUserFilter extends OncePerRequestFilter {
 
   private final String[] ENDPOINTS_LIST = {
       "/events",
-      "/users/update"
+      "/users/update",
+      "/users/find",
   };
 
   public SecurityUserFilter(final JwtUserProvider jwtUserProvider) {

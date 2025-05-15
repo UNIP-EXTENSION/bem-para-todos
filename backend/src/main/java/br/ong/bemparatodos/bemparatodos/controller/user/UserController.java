@@ -8,8 +8,10 @@ import br.ong.bemparatodos.bemparatodos.service.CrudService;
 import br.ong.bemparatodos.bemparatodos.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Role;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,7 +45,12 @@ public class UserController extends CrudController<UserInsertRecord, UUID> {
       @RequestBody final UserInsertRecord userInsertRecord) {
 
     return CompletableFuture
-        .supplyAsync(() -> ResponseEntity.ok(userService.updatePartially(id, userInsertRecord)))
-        .exceptionally((e) -> ResponseEntity.status(500).body(null));
+        .supplyAsync(() -> ResponseEntity.ok(userService.updatePartially(id, userInsertRecord)));
+  }
+
+  @GetMapping("/find/{id}")
+  public CompletableFuture<ResponseEntity<UserRecord>> getFindById(@PathVariable final UUID id) {
+    return CompletableFuture
+        .supplyAsync(() -> ResponseEntity.ok(userService.userFindById(id)));
   }
 }

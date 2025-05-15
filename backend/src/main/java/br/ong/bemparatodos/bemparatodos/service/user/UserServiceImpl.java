@@ -9,6 +9,7 @@ import br.ong.bemparatodos.bemparatodos.record.user.UserUpdateRecord;
 import br.ong.bemparatodos.bemparatodos.repository.user.RoleRepository;
 import br.ong.bemparatodos.bemparatodos.repository.user.UserRepository;
 import br.ong.bemparatodos.bemparatodos.service.exception.resource.ResourceInvalidException;
+import br.ong.bemparatodos.bemparatodos.service.exception.resource.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,10 +69,6 @@ public class UserServiceImpl implements UserService {
         new ArrayList<>(userInsertRecords), pageable, userPage.getTotalElements());
   }
 
-  @Override
-  public UserInsertRecord findById(UUID uuid) {
-    return null;
-  }
 
   @Override
   public UserInsertRecord save(@Valid final UserInsertRecord entity) {
@@ -96,11 +93,6 @@ public class UserServiceImpl implements UserService {
 
     user = userRepository.save(user);
     return userInsertMapper.entitytoRecord(user);
-  }
-
-  @Override
-  public UserInsertRecord update(final UUID uuid, UserInsertRecord entity) {
-    return null;
   }
 
   @Transactional
@@ -132,7 +124,10 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void delete(final UUID uuid) {
+  public UserRecord userFindById(final UUID id) {
+    final User user = userRepository.findById(id).orElseThrow(
+        () -> new ResourceNotFoundException("User not found"));
 
+    return userMapper.entitytoRecord(user);
   }
 }

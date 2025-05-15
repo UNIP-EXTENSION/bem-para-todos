@@ -13,13 +13,14 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
   @ExceptionHandler(ResourceNotFoundException.class)
   public ResponseEntity<StandardErrorRecord> resourceNotFound(ResourceNotFoundException e, HttpServletRequest request) {
-    return buildResponse(HttpStatus.NOT_FOUND, Collections.singletonList(e.getMessage()), request);
+    return buildResponse(HttpStatus.NOT_FOUND, List.of(e.getMessage()), request);
   }
 
   @ExceptionHandler(ResourceInvalidException.class)

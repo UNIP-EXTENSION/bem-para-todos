@@ -5,14 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface CrudService<T, ID> {
-  Page<T> findAllPaged(Pageable pageable);
+  default Page<T> findAllPaged(Pageable pageable){return null;};
 
-  T findById(ID id);
+  default T findById(ID id){return null;};
 
-  T save(@Valid T entity);
+  default T save(@Valid T entity){return null;};
 
-  T update(ID id, @Valid T entity);
+  default T update(ID id, @Valid T entity){return null;};
 
-  void delete(ID id);
+  default void delete(ID id){};
 
 }

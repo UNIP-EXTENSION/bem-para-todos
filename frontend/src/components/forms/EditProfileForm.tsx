@@ -18,7 +18,7 @@ import { AuthStorage } from "../../storage/auth_storage";
 import { UserService } from "../../services/user_service";
 
 type FormData = {
-  name: string;
+  firstName: string;
   lastName: string;
   email: string;
   confirmEmail: string;
@@ -31,49 +31,42 @@ const EditProfileForm: React.FC = () => {
     control,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<FormData>();
 
-const userService = new UserService();
-
+  const userService = new UserService();
 
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [userId, setUserId] = useState<string>("");
+  const [originalEmail, setOriginalEmail] = useState("");
+
+  const emailValue = watch("email");
 
   useEffect(() => {
-    const loadUser = async () => {
+    const fetchData = async () => {
       const session = await AuthStorage.getSession();
       if (session) {
-        setValue("name", session.name);
-        setValue("email", session.email);
         setUserId(session.uuid);
-      }
-    };
-    loadUser();
-  }, []);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (userId) {
         try {
-          const userData = await userService.getUserData(userId);
-          console.log("Dados do usuário:", userData);
-          // Se precisar, pode setar outros valores no formulário com setValue
+          const userData = await userService.getUserData(session.uuid);
+          setOriginalEmail(userData.email);
+
+          setValue("firstName", userData.firstName);
+          setValue("lastName", userData.lastName);
+          setValue("email", userData.email);
         } catch (error) {
           console.error("Erro ao buscar dados do usuário:", error);
         }
       }
     };
 
-    if (userId) {
-      fetchUserData();
-    }
-  }, [userId]);
+    fetchData();
+  }, []);
 
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== "granted") {
-      alert("Permissão negada para acessar a galeria!");
       return;
     }
 
@@ -92,20 +85,19 @@ const userService = new UserService();
     console.log("Imagem URI:", imageUri);
 
     if (data.email !== data.confirmEmail) {
-      alert("Os e-mails não coincidem.");
       return;
     }
 
-    const updated = await userService.updateUser(userId, {
-      firstName: data.name,
-      lastName: data.lastName,
-      email: data.email,
-    });
+    try {
+      const updated = await userService.updateUser(userId, {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+      });
 
-    if (updated) {
-      console.log("Dados atualizados com sucesso!");
-    } else {
-      console.error("Erro ao atualizar dados.");
+      console.log("Usuario foi atualizado:", updated);
+    } catch (error) {
+      console.error("Erro ao atualizar dados:", error);
     }
   };
 
@@ -125,14 +117,14 @@ const userService = new UserService();
         <Text style={styles.title}>Editar Perfil</Text>
         {[
           {
-            name: "name",
+            name: "firstName",
             label: "Digite seu nome",
             placeholder: "Digite seu nome",
           },
           {
             name: "lastName",
-            label: "Digite seu Sobrenome",
-            placeholder: "Digite seu Sobrenome",
+            label: "Digite seu sobrenome",
+            placeholder: "Digite seu sobrenome",
           },
           {
             name: "email",
@@ -140,35 +132,47 @@ const userService = new UserService();
             placeholder: "E-mail",
             keyboardType: "email-address",
           },
-          {
-            name: "confirmEmail",
-            label: "Confirme seu e-mail",
-            placeholder: "Confirme seu e-mail",
-            keyboardType: "email-address",
-          },
         ].map(({ name, label, placeholder, ...rest }) => (
           <View key={name} style={styles.inputContainer}>
             <Controller
               name={name as keyof FormData}
               control={control}
-              rules={{ required: true }}
+              rules={{ required: "Campo obrigatório" }}
               render={({ field: { onChange, value } }) => (
                 <InputAuth
                   labelText={label}
                   hintText={placeholder}
                   value={value ?? ""}
                   onChangeText={onChange}
-                  error={
-                    errors[name as keyof FormData]
-                      ? "Campo obrigatório"
-                      : undefined
-                  }
+                  error={errors[name as keyof FormData]?.message}
                   {...rest}
                 />
               )}
             />
           </View>
         ))}
+        {emailValue !== originalEmail && (
+          <View style={styles.inputContainer}>
+            <Controller
+              name="confirmEmail"
+              control={control}
+              rules={{
+                required: true,
+                validate: (value) =>
+                  value === emailValue || "Os e-mails não coincidem.",
+              }}
+              render={({ field: { onChange, value } }) => (
+                <InputAuth
+                  labelText="Confirme seu e-mail"
+                  hintText="Confirme seu e-mail"
+                  value={value ?? ""}
+                  onChangeText={onChange}
+                  error={errors?.confirmEmail?.message}
+                />
+              )}
+            />
+          </View>
+        )}
 
         <ButtonAuth text="Editar" onPress={handleSubmit(onSubmit)} />
       </ScrollView>

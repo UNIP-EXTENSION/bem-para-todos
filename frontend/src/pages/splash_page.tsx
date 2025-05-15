@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, Image, StatusBar, Alert } from "react-native";
+import { View, StyleSheet, Image, StatusBar } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import { AuthService } from "../services/auth_service";

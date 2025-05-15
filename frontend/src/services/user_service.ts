@@ -25,7 +25,7 @@ export class UserService {
   // Buscar dados do usuário
   async getUserData(id: string): Promise<any> {
     try {
-      const { data } = await httpClient.get(`${this.endpoint}/${id}`);
+      const { data } = await httpClient.get(`${this.endpoint}/find/${id}`);
 
       return data;
     } catch (error) {

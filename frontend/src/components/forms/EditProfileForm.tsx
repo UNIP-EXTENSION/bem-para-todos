@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -14,6 +14,8 @@ import { useForm, Controller } from "react-hook-form";
 import * as ImagePicker from "expo-image-picker";
 import ButtonAuth from "../buttons/ButtonAuth";
 import InputAuth from "../InputAuth";
+import { AuthStorage } from "../../storage/auth_storage";
+import { UserService } from "../../services/user_service";
 
 type FormData = {
   name: string;
@@ -28,10 +30,45 @@ const EditProfileForm: React.FC = () => {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormData>();
 
+const userService = new UserService();
+
+
   const [imageUri, setImageUri] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string>("");
+
+  useEffect(() => {
+    const loadUser = async () => {
+      const session = await AuthStorage.getSession();
+      if (session) {
+        setValue("name", session.name);
+        setValue("email", session.email);
+        setUserId(session.uuid);
+      }
+    };
+    loadUser();
+  }, []);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (userId) {
+        try {
+          const userData = await userService.getUserData(userId);
+          console.log("Dados do usuário:", userData);
+          // Se precisar, pode setar outros valores no formulário com setValue
+        } catch (error) {
+          console.error("Erro ao buscar dados do usuário:", error);
+        }
+      }
+    };
+
+    if (userId) {
+      fetchUserData();
+    }
+  }, [userId]);
 
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -50,9 +87,26 @@ const EditProfileForm: React.FC = () => {
     }
   };
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     console.log("Usuário cadastrado:", data);
     console.log("Imagem URI:", imageUri);
+
+    if (data.email !== data.confirmEmail) {
+      alert("Os e-mails não coincidem.");
+      return;
+    }
+
+    const updated = await userService.updateUser(userId, {
+      firstName: data.name,
+      lastName: data.lastName,
+      email: data.email,
+    });
+
+    if (updated) {
+      console.log("Dados atualizados com sucesso!");
+    } else {
+      console.error("Erro ao atualizar dados.");
+    }
   };
 
   return (
@@ -76,7 +130,7 @@ const EditProfileForm: React.FC = () => {
             placeholder: "Digite seu nome",
           },
           {
-            name: "sobrenome",
+            name: "lastName",
             label: "Digite seu Sobrenome",
             placeholder: "Digite seu Sobrenome",
           },

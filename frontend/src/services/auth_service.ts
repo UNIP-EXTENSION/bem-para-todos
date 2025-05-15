@@ -43,12 +43,4 @@ export class AuthService {
   async logout(): Promise<void> {
     await AuthStorage.removeSession();
   }
-
-  // Recuperar dados do usuário logado
-  async getUserInfo() {
-    const session = await AuthStorage.getSession();
-    return session
-      ? { email: session.email, name: session.name, uuid: session.uuid }
-      : null;
-  }
 }

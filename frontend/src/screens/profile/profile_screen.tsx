@@ -5,8 +5,10 @@ import ButtonAuth from "../../components/buttons/ButtonAuth";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProp } from "../../navigation/types";
 import { AuthService } from "../../services/auth_service";
+import { UserService } from "../../services/user_service";
 
 const authService = new AuthService();
+const userService = new UserService();
 
 const ProfileScreen = () => {
   const navigation = useNavigation<NavigationProp>();
@@ -19,7 +21,7 @@ const ProfileScreen = () => {
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       try {
-        const userInfo = await authService.getUserInfo();
+        const userInfo = await userService.getUserInfo();
 
         if (userInfo) {
           setUserName(userInfo.name);

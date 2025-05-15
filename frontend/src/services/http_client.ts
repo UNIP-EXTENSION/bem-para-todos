@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "react-native-dotenv";
+import { AuthStorage } from "../storage/auth_storage";
 
 const httpClient = axios.create({
   baseURL: BASE_URL,
@@ -10,7 +11,13 @@ const httpClient = axios.create({
 
 // Interceptor de requisição
 httpClient.interceptors.request.use(
-  (config) => {
+  async (config) => {
+    const session = await AuthStorage.getSession();
+
+    if (session && session.token) {
+      config.headers.Authorization = `Bearer ${session.token}`;
+    }
+
     console.log(`[REQUEST] ${config.method?.toUpperCase()} ${config.url}`);
     console.log("Headers:", config.headers);
     console.log("Body:", config.data);

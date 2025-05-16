@@ -16,6 +16,8 @@ import ButtonAuth from "../buttons/ButtonAuth";
 import InputAuth from "../InputAuth";
 import { AuthStorage } from "../../storage/auth_storage";
 import { UserService } from "../../services/user_service";
+import AlertDialog from "../AlertDialog";
+import { useAlert } from "../../hooks/useAlert";
 
 type FormData = {
   firstName: string;
@@ -49,6 +51,7 @@ const EditProfileForm: React.FC = () => {
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [userId, setUserId] = useState<string>("");
   const [originalEmail, setOriginalEmail] = useState("");
+  const { alertState, updateAlertState } = useAlert();
 
   const emailValue = watch("email");
   const passwordValue = watch("password");
@@ -91,17 +94,25 @@ const EditProfileForm: React.FC = () => {
   };
 
   const onSubmit = async (data: FormData) => {
-    console.log("Usuário (edit):", data);
     console.log("Imagem URI:", imageUri);
 
     try {
+      updateAlertState("loading", "Salvando alterações...");
+
       await userService.updateUser(userId, {
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
       });
+
+      updateAlertState("success", "Perfil atualizado com sucesso!");
+
+      setTimeout(() => {
+        updateAlertState("idle");
+      }, 3000);
     } catch (error) {
       console.error("Erro ao atualizar dados:", error);
+      updateAlertState("success", "Perfil atualizado com sucesso!");
     }
   };
 
@@ -225,6 +236,14 @@ const EditProfileForm: React.FC = () => {
 
         <ButtonAuth text="Editar" onPress={handleSubmit(onSubmit)} />
       </ScrollView>
+
+      <AlertDialog
+        visible={alertState.visible}
+        onClose={() => updateAlertState("idle")}
+        textBody={alertState.text}
+        dialogIcon={alertState.icon}
+        primaryButton={false}
+      />
     </KeyboardAvoidingView>
   );
 };

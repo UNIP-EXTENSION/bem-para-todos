@@ -33,7 +33,16 @@ const EditProfileForm: React.FC = () => {
     setValue,
     watch,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    defaultValues: {
+      password: "",
+      confirmPassword: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      confirmEmail: "",
+    },
+  });
 
   const userService = new UserService();
 
@@ -42,6 +51,7 @@ const EditProfileForm: React.FC = () => {
   const [originalEmail, setOriginalEmail] = useState("");
 
   const emailValue = watch("email");
+  const passwordValue = watch("password");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,21 +91,15 @@ const EditProfileForm: React.FC = () => {
   };
 
   const onSubmit = async (data: FormData) => {
-    console.log("Usuário cadastrado:", data);
+    console.log("Usuário (edit):", data);
     console.log("Imagem URI:", imageUri);
 
-    if (data.email !== data.confirmEmail) {
-      return;
-    }
-
     try {
-      const updated = await userService.updateUser(userId, {
+      await userService.updateUser(userId, {
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
       });
-
-      console.log("Usuario foi atualizado:", updated);
     } catch (error) {
       console.error("Erro ao atualizar dados:", error);
     }
@@ -168,6 +172,51 @@ const EditProfileForm: React.FC = () => {
                   value={value ?? ""}
                   onChangeText={onChange}
                   error={errors?.confirmEmail?.message}
+                />
+              )}
+            />
+          </View>
+        )}
+
+        <View style={styles.inputContainer}>
+          <Controller
+            name="password"
+            control={control}
+            rules={{ minLength: 6 }}
+            render={({ field: { onChange, value } }) => (
+              <InputAuth
+                labelText="Nova Senha"
+                hintText="Digite sua nova senha"
+                value={value ?? ""}
+                onChangeText={onChange}
+                obscureText={true}
+                error={
+                  errors.password
+                    ? "Senha deve ter no mínimo 6 caracteres"
+                    : undefined
+                }
+              />
+            )}
+          />
+        </View>
+
+        {passwordValue && passwordValue.length > 0 && (
+          <View style={styles.inputContainer}>
+            <Controller
+              name="confirmPassword"
+              control={control}
+              rules={{
+                validate: (value) =>
+                  value === passwordValue || "As senhas não coincidem",
+              }}
+              render={({ field: { onChange, value } }) => (
+                <InputAuth
+                  labelText="Confirmar Nova Senha"
+                  hintText="Confirme sua nova senha"
+                  value={value ?? ""}
+                  onChangeText={onChange}
+                  obscureText={true}
+                  error={errors.confirmPassword?.message}
                 />
               )}
             />

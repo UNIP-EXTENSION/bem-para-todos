@@ -18,9 +18,10 @@ httpClient.interceptors.request.use(
       config.headers.Authorization = `Bearer ${session.token}`;
     }
 
+    console.log(`\n[BASE URL] ${BASE_URL}`);
     console.log(`[REQUEST] ${config.method?.toUpperCase()} ${config.url}`);
     console.log("Headers:", config.headers);
-    console.log("Body:", config.data);
+    console.log("\nBody:", config.data);
     return config;
   },
   (error) => {

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import TopBar from "../../components/bars/top_bar";
 import ButtonAuth from "../../components/buttons/ButtonAuth";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NavigationProp } from "../../navigation/types";
 import { AuthService } from "../../services/auth_service";
 import { UserService } from "../../services/user_service";
@@ -16,28 +16,30 @@ const ProfileScreen = () => {
   const [userName, setUserName] = useState<string>("");
   const [userEmail, setUserEmail] = useState<string>("");
 
-  useEffect(() => {
-    const getUserInfo = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+  useFocusEffect(
+    useCallback(() => {
+      const getUserInfo = async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      try {
-        const userInfo = await userService.getUserInfo();
+        try {
+          const userInfo = await userService.getUserInfo();
 
-        if (userInfo) {
-          setUserName(userInfo.name);
-          setUserEmail(userInfo.email);
-        } else {
+          if (userInfo) {
+            setUserName(`${userInfo.firstName} ${userInfo.lastName}`);
+            setUserEmail(userInfo.email);
+          } else {
+            authService.logout();
+            navigation.replace("Login");
+          }
+        } catch (error) {
           authService.logout();
           navigation.replace("Login");
         }
-      } catch (error) {
-        authService.logout();
-        navigation.replace("Login");
-      }
-    };
+      };
 
-    getUserInfo();
-  }, []);
+      getUserInfo();
+    }, [navigation])
+  );
 
   const onTicketsPress = useCallback(async () => {
     console.log("Botão Meus Ingressos pressionado");

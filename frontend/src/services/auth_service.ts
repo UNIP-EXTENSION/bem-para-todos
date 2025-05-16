@@ -21,7 +21,7 @@ export class AuthService {
       await AuthStorage.saveSession({
         token,
         email: emailDecoded,
-        name: nameDecoded,
+        firstName: nameDecoded,
         uuid,
       });
 

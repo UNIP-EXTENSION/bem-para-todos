@@ -14,7 +14,18 @@ export class UserService {
         `${this.endpoint}/update/${id}`,
         updateData
       );
-      console.log("Usuário atualizado:", response.data);
+
+      const session = await AuthStorage.getSession();
+
+      if (session) {
+        const updatedSession = {
+          ...session,
+          ...updateData,
+        };
+
+        await AuthStorage.saveSession(updatedSession);
+      }
+
       return true;
     } catch (error) {
       console.error("Erro ao atualizar usuário:", error);
@@ -39,7 +50,12 @@ export class UserService {
   async getUserInfo() {
     const session = await AuthStorage.getSession();
     return session
-      ? { email: session.email, name: session.name, uuid: session.uuid }
+      ? {
+          email: session.email,
+          firstName: session.firstName,
+          lastName: session?.lastName,
+          uuid: session.uuid,
+        }
       : null;
   }
 }

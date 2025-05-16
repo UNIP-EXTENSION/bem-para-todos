@@ -25,7 +25,11 @@ const ProfileScreen = () => {
           const userInfo = await userService.getUserInfo();
 
           if (userInfo) {
-            setUserName(`${userInfo.firstName} ${userInfo.lastName}`);
+            setUserName(
+              `${userInfo.firstName}${
+                userInfo?.lastName ? ` ${userInfo.lastName}` : ""
+              }`
+            );
             setUserEmail(userInfo.email);
           } else {
             authService.logout();

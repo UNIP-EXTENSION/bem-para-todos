@@ -4,4 +4,5 @@ export interface AuthSession {
   firstName: string;
   lastName?: string;
   uuid: string;
+  expire_in: number
 }

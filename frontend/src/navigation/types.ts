@@ -8,3 +8,12 @@ export type RootStackParamList = {
 };
 
 export type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
+export type MainRootStackParamList = {
+  Main: {
+    screen: "Home" | "Events" | "Profile";
+  };
+};
+
+export type NavigationMainProp =
+  NativeStackNavigationProp<MainRootStackParamList>;

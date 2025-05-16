@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
-  TextInput,
   ScrollView,
   Text,
   KeyboardAvoidingView,
@@ -18,6 +17,8 @@ import { AuthStorage } from "../../storage/auth_storage";
 import { UserService } from "../../services/user_service";
 import AlertDialog from "../AlertDialog";
 import { useAlert } from "../../hooks/useAlert";
+import { useNavigation } from "@react-navigation/native";
+import { NavigationMainProp } from "../../navigation/types";
 
 type FormData = {
   firstName: string;
@@ -47,6 +48,7 @@ const EditProfileForm: React.FC = () => {
   });
 
   const userService = new UserService();
+  const navigation = useNavigation<NavigationMainProp>();
 
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [userId, setUserId] = useState<string>("");
@@ -109,6 +111,7 @@ const EditProfileForm: React.FC = () => {
 
       setTimeout(() => {
         updateAlertState("idle");
+        navigation.navigate("Main", { screen: "Profile" });
       }, 3000);
     } catch (error) {
       console.error("Erro ao atualizar dados:", error);

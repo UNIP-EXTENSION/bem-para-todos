@@ -29,11 +29,59 @@ type FormData = {
   confirmPassword: string;
 };
 
+const validationRules = {
+  firstName: {
+    required: "Campo obrigatório",
+    pattern: {
+      value: /^[A-Za-zÀ-ÿ\s]+$/,
+      message: "Não use números no nome",
+    },
+  },
+  lastName: {
+    required: "Campo obrigatório",
+    pattern: {
+      value: /^[A-Za-zÀ-ÿ\s]+$/,
+      message: "Não use números no sobrenome",
+    },
+  },
+  email: {
+    required: "Campo obrigatório",
+    pattern: {
+      value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+      message: "E-mail inválido",
+    },
+  },
+  confirmEmail: {
+    required: "Campo obrigatório",
+    validate: (value: string, formValues: FormData) =>
+      value === formValues.email || "Os e-mails não coincidem",
+  },
+  password: {
+    validate: (value: string) => {
+      if (!value || value.length === 0) return true;
+      if (value.length < 8) return "A senha deve ter pelo menos 8 caracteres";
+      if (!/[A-Za-z]/.test(value) || !/\d/.test(value)) {
+        return "A senha deve conter letras e números";
+      }
+      return true;
+    },
+  },
+  confirmPassword: {
+    validate: (value: string, formValues: FormData) => {
+      if (!formValues.password || formValues.password.length === 0) {
+        return true; // não validar se a senha original não foi preenchida
+      }
+      return value === formValues.password || "As senhas não coincidem";
+    },
+  },
+};
+
 const EditProfileForm: React.FC = () => {
   const {
     control,
     handleSubmit,
     setValue,
+    getValues,
     watch,
     formState: { errors },
   } = useForm<FormData>({
@@ -45,6 +93,7 @@ const EditProfileForm: React.FC = () => {
       email: "",
       confirmEmail: "",
     },
+    mode: "all",
   });
 
   const userService = new UserService();
@@ -129,7 +178,7 @@ const EditProfileForm: React.FC = () => {
           {imageUri ? (
             <Image source={{ uri: imageUri }} style={styles.image} />
           ) : (
-            <Text style={styles.imagePlaceholderText}>Selecionar Imagem</Text>
+            <Image source={require("../../assets/images/profile_view.png")} />
           )}
         </TouchableOpacity>
         <Text style={styles.title}>Editar Perfil</Text>
@@ -155,7 +204,7 @@ const EditProfileForm: React.FC = () => {
             <Controller
               name={name as keyof FormData}
               control={control}
-              rules={{ required: "Campo obrigatório" }}
+              rules={validationRules[name as keyof FormData]}
               render={({ field: { onChange, value } }) => (
                 <InputAuth
                   labelText={label}
@@ -174,11 +223,7 @@ const EditProfileForm: React.FC = () => {
             <Controller
               name="confirmEmail"
               control={control}
-              rules={{
-                required: true,
-                validate: (value) =>
-                  value === emailValue || "Os e-mails não coincidem.",
-              }}
+              rules={validationRules.confirmEmail}
               render={({ field: { onChange, value } }) => (
                 <InputAuth
                   labelText="Confirme seu e-mail"
@@ -196,7 +241,7 @@ const EditProfileForm: React.FC = () => {
           <Controller
             name="password"
             control={control}
-            rules={{ minLength: 6 }}
+            rules={validationRules.password}
             render={({ field: { onChange, value } }) => (
               <InputAuth
                 labelText="Nova Senha"
@@ -204,11 +249,7 @@ const EditProfileForm: React.FC = () => {
                 value={value ?? ""}
                 onChangeText={onChange}
                 obscureText={true}
-                error={
-                  errors.password
-                    ? "Senha deve ter no mínimo 6 caracteres"
-                    : undefined
-                }
+                error={errors?.password?.message}
               />
             )}
           />
@@ -276,7 +317,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ddd",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 24,
+    marginBottom: 16,
     overflow: "hidden",
   },
   image: {

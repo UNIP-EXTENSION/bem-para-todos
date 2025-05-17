@@ -67,7 +67,7 @@ const ProfileScreen = () => {
         <View style={styles.userInfoContainer}>
           <View style={styles.avatarContainer}>
             <Image
-              source={require("../../assets/images/bars/profile.png")}
+              source={require("../../assets/images/profile_view.png")}
               style={styles.avatarImage}
             />
           </View>

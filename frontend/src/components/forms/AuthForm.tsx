@@ -14,6 +14,8 @@ import { CrudService } from "../../services/crud_service";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../navigation/types";
+import { useAlert } from "../../hooks/useAlert";
+import AlertDialog from "../AlertDialog";
 
 type FormData = {
   name: string;
@@ -33,27 +35,82 @@ const mapUser = (formData: any) => {
   };
 };
 
+const validationRules = {
+  name: {
+    required: "Campo obrigatório",
+    pattern: {
+      value: /^[A-Za-zÀ-ÿ\s]+$/,
+      message: "Não use números no nome",
+    },
+  },
+  lastName: {
+    required: "Campo obrigatório",
+    pattern: {
+      value: /^[A-Za-zÀ-ÿ\s]+$/,
+      message: "Não use números no sobrenome",
+    },
+  },
+  email: {
+    required: "Campo obrigatório",
+    pattern: {
+      value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+      message: "E-mail inválido",
+    },
+  },
+  confirmEmail: {
+    required: "Campo obrigatório",
+    validate: (value: string, formValues: FormData) =>
+      value === formValues.email || "Os e-mails não coincidem",
+  },
+  password: {
+    required: "Campo obrigatório",
+    minLength: {
+      value: 8,
+      message: "A senha deve ter pelo menos 8 caracteres",
+    },
+    validate: (value: string) =>
+      (/[A-Za-z]/.test(value) && /\d/.test(value)) ||
+      "A senha deve conter letras e números",
+  },
+  confirmPassword: {
+    required: "Campo obrigatório",
+    validate: (value: string, formValues: FormData) =>
+      value === formValues.password || "As senhas não coincidem",
+  },
+};
+
 const AuthForm: React.FC = () => {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({ mode: "all" });
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
+  const { alertState, updateAlertState } = useAlert();
+
   const onSubmit = async (data: FormData) => {
+    updateAlertState("loading", "Cadastrando usuário...");
+
     const userData = mapUser(data);
 
     try {
       const success = await CrudService.post("users", userData);
 
       if (success) {
+        updateAlertState("success", "Perfil atualizado com sucesso!");
+
+        setTimeout(() => {
+          updateAlertState("idle");
+          navigation.replace("Login");
+        }, 3000);
         navigation.replace("Login");
       }
     } catch (error) {
       console.error("Erro no cadastro:", error);
+      updateAlertState("error", "Erro ao cadastrar usuário.");
       throw error;
     }
   };
@@ -91,20 +148,20 @@ const AuthForm: React.FC = () => {
             name: "password",
             label: "Digite sua senha",
             placeholder: "Sua senha",
-            secureTextEntry: true,
+            obscureText: true,
           },
           {
             name: "confirmPassword",
             label: "Confirme sua senha",
             placeholder: "Confirme sua senha",
-            secureTextEntry: true,
+            obscureText: true,
           },
         ].map(({ name, label, placeholder, ...rest }) => (
           <View key={name} style={styles.inputContainer}>
             <Controller
               name={name as keyof FormData}
               control={control}
-              rules={{ required: true }}
+              rules={validationRules[name as keyof FormData]}
               render={({ field: { onChange, value } }) => (
                 <InputAuth
                   labelText={label}
@@ -112,10 +169,11 @@ const AuthForm: React.FC = () => {
                   value={value ?? ""}
                   onChangeText={onChange}
                   error={
-                    errors[name as keyof FormData]
-                      ? "Campo obrigatório"
-                      : undefined
+                    errors[name as keyof FormData]?.message as
+                      | string
+                      | undefined
                   }
+                  obscureText={!!rest.obscureText}
                   {...rest}
                 />
               )}
@@ -128,6 +186,14 @@ const AuthForm: React.FC = () => {
         <View style={{ marginTop: 12 }} />
         <ButtonGoogle text="Cadastrar com o Google" />
       </ScrollView>
+
+      <AlertDialog
+        visible={alertState.visible}
+        onClose={() => updateAlertState("idle")}
+        textBody={alertState.text}
+        dialogIcon={alertState.icon}
+        primaryButton={false}
+      />
     </KeyboardAvoidingView>
   );
 };

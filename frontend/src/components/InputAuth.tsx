@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   prefixIcon: {
     width: 20,
     height: 20,
-    marginRight: 10,
+    marginRight: 5,
     resizeMode: "contain",
   },
   input: {

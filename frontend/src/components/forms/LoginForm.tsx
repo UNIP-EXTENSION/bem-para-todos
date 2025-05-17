@@ -16,6 +16,9 @@ import { AuthService } from "../../services/auth_service";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../navigation/types";
+import { all } from "axios";
+import { useAlert } from "../../hooks/useAlert";
+import AlertDialog from "../AlertDialog";
 
 type FormData = {
   email: string;
@@ -29,9 +32,7 @@ type LoginFormProps = {
 
 const authService = new AuthService();
 
-const LoginForm: React.FC<LoginFormProps> = ({
-  onNavigateToAuthPage,
-}) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onNavigateToAuthPage }) => {
   const {
     control,
     handleSubmit,
@@ -41,31 +42,36 @@ const LoginForm: React.FC<LoginFormProps> = ({
       email: "",
       password: "",
     },
+    mode: "all",
   });
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { alertState, updateAlertState } = useAlert();
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  // const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    setIsLoading(true);
-    setErrorMessage(null);
+    updateAlertState("loading", "Realizando login...");
 
     try {
       const success = await authService.login(data.email, data.password);
 
       if (success) {
-        navigation.replace("Main");
+        updateAlertState("success", "Login realizado com sucesso!");
+        setTimeout(() => {
+          updateAlertState("idle");
+          navigation.replace("Main");
+        }, 2000);
       } else {
-        setErrorMessage("Falha no login. Verifique suas credenciais.");
+        updateAlertState(
+          "error",
+          "Falha no login. Verifique suas credenciais."
+        );
       }
     } catch (error: any) {
       console.error("Erro no login:", error);
-      setErrorMessage(error.message || "Ocorreu um erro inesperado.");
-    } finally {
-      setIsLoading(false);
+      updateAlertState("error", error.message || "Ocorreu um erro inesperado.");
     }
   };
 
@@ -78,14 +84,21 @@ const LoginForm: React.FC<LoginFormProps> = ({
         <Controller
           control={control}
           name="email"
-          rules={{ required: "E-mail é obrigatório" }}
+          rules={{
+            required: "E-mail é obrigatório",
+            pattern: {
+              value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+              message: "Formato de e-mail inválido",
+            },
+          }}
           render={({ field: { onChange, onBlur, value, ...rest } }) => (
             <InputAuth
               labelText="E-mail"
               hintText="Digite seu e-mail"
               value={value}
               onChangeText={onChange}
-              error={errors["email"] ? "Campo obrigatório" : undefined}
+              error={errors["email"]?.message}
+              imagePath={require("../../assets/images/inputs/email.png")}
               {...rest}
             />
           )}
@@ -102,7 +115,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
               hintText="Digite sua senha"
               value={value}
               onChangeText={onChange}
-              error={errors["password"] ? "Campo obrigatório" : undefined}
+              error={errors["password"]?.message}
+              imagePath={require("../../assets/images/inputs/key.png")}
               {...rest}
             />
           )}
@@ -116,11 +130,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
         <View style={styles.smallSpacing} />
 
-        {isLoading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
-        ) : (
-          <ButtonAuth text="Entrar" onPress={handleSubmit(onSubmit)} />
-        )}
+        <ButtonAuth text="Entrar" onPress={handleSubmit(onSubmit)} />
 
         <View style={styles.smallSpacing} />
 
@@ -134,14 +144,15 @@ const LoginForm: React.FC<LoginFormProps> = ({
         >
           <Text style={styles.firstAccessButtonText}>Primeiro acesso?</Text>
         </TouchableOpacity>
-
-        {errorMessage && (
-          <>
-            <View style={styles.smallSpacing} />
-            <Text style={styles.errorMessageText}>{errorMessage}</Text>
-          </>
-        )}
       </View>
+
+      <AlertDialog
+        visible={alertState.visible}
+        onClose={() => updateAlertState("idle")}
+        textBody={alertState.text}
+        dialogIcon={alertState.icon}
+        primaryButton={false}
+      />
     </KeyboardAvoidingView>
   );
 };

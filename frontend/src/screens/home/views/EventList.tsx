@@ -5,12 +5,13 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
+  ImageSourcePropType,
 } from "react-native";
 import EventCard from "../../../components/cards/EventCard";
 
 interface Event {
   name: string;
-  image: string;
+  image: string | ImageSourcePropType;
 }
 
 interface EventListProps {

@@ -1,31 +1,40 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ImageSourcePropType,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-
 
 interface EventCardProps {
   name: string;
-  imageUrl: string;
+  imageUrl: string | ImageSourcePropType;
   onPress: () => void;
 }
 
 const EventCard: React.FC<EventCardProps> = ({ name, imageUrl, onPress }) => {
+  const imageSource =
+    typeof imageUrl === "string" ? { uri: imageUrl } : imageUrl;
+
   return (
     <TouchableOpacity onPress={onPress} style={styles.card}>
       <View style={styles.cardContainer}>
         <View style={styles.header}>
-        <LinearGradient
-          colors={["#000000", "#616161"]}
-          start={{ x: 0, y: 0.5 }}
-          end={{ x: 1, y: 0.5 }}
-          style={styles.gradientBackground}
-        >
-          <Text style={styles.headerText}>{name}</Text>
-        </LinearGradient>
+          <LinearGradient
+            colors={["#000000", "#616161"]}
+            start={{ x: 0, y: 0.5 }}
+            end={{ x: 1, y: 0.5 }}
+            style={styles.gradientBackground}
+          >
+            <Text style={styles.headerText}>{name}</Text>
+          </LinearGradient>
         </View>
 
         <View style={styles.imageContainer}>
-          <Image source={{ uri: imageUrl }} style={styles.image} />
+          <Image source={imageSource} style={styles.image} />
         </View>
       </View>
     </TouchableOpacity>
@@ -61,8 +70,6 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 1,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
     overflow: "hidden",
   },
   image: {

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet, ImageSourcePropType } from "react-native";
 import TopBar from "../../components/bars/top_bar";
 import EventList from "./views/EventList";
 import GalleryView from "./views/GalleryView";
@@ -8,10 +8,10 @@ const HomeScreen = () => {
   const [index, setIndex] = React.useState(0);
 
   const events = [
-    { name: "Evento 1", image: "https://via.placeholder.com/150" },
-    { name: "Evento 2", image: "https://via.placeholder.com/150" },
-    { name: "Evento 3", image: "https://via.placeholder.com/150" },
-    { name: "Evento 4", image: "https://via.placeholder.com/150" },
+    { name: "Evento 1", image: require("../../assets/event1.png") },
+    { name: "Evento 2", image: require("../../assets/event2.png") },
+    { name: "Evento 3", image: require("../../assets/event1.png") },
+    { name: "Evento 4", image: require("../../assets/event2.png") },
   ];
 
   const gallery = [

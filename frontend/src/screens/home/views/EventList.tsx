@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import EventCard from "../../../components/cards/EventCard";
 
 interface Event {
@@ -14,41 +20,64 @@ interface EventListProps {
 const EventList: React.FC<EventListProps> = ({ events }) => {
   if (events.length === 0) {
     return (
-      <View style={styles.center}>
+      <View style={styles.noEvents}>
         <Text style={styles.noEventsText}>Não há eventos disponíveis.</Text>
       </View>
     );
   }
 
   const renderItem = ({ item }: { item: Event }) => (
-      <EventCard
-        name={item.name}
-        imageUrl={item.image}
-        onPress={() => {
-          console.log(`Clicou no ${item.name}`);
-        }}
-      />
+    <EventCard
+      name={item.name}
+      imageUrl={item.image}
+      onPress={() => {
+        console.log(`Clicou no ${item.name}`);
+      }}
+    />
   );
 
   return (
-    <FlatList
-      data={events}
-      keyExtractor={(item, index) => index.toString()}
-      renderItem={renderItem}
-    />
+    <View style={styles.wrapper}>
+      <TouchableOpacity
+        style={styles.headerButton}
+        onPress={() => console.log("Cadastrar evento pressionado")}
+      >
+        <Text style={styles.headerButtonText}>+ Cadastrar novo evento</Text>
+      </TouchableOpacity>
+
+      <FlatList
+        data={events}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={renderItem}
+        contentContainerStyle={styles.container}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  itemContainer: {
+  wrapper: {
     flex: 1,
-    margin: 5,
-    aspectRatio: 1,
   },
-  center: {
-    // flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
+  headerButton: {
+    paddingTop: 30,
+    paddingBottom: 30,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headerButtonText: {
+    fontSize: 20,
+    color: "#00000040",
+    fontWeight: "bold",
+  },
+  container: {
+    paddingRight: 20,
+    paddingLeft: 20,
+  },
+  noEvents: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   noEventsText: {
     fontSize: 18,

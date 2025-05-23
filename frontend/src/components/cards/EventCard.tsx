@@ -1,5 +1,7 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+
 
 interface EventCardProps {
   name: string;
@@ -12,7 +14,14 @@ const EventCard: React.FC<EventCardProps> = ({ name, imageUrl, onPress }) => {
     <TouchableOpacity onPress={onPress} style={styles.card}>
       <View style={styles.cardContainer}>
         <View style={styles.header}>
+        <LinearGradient
+          colors={["#000000", "#616161"]}
+          start={{ x: 0, y: 0.5 }}
+          end={{ x: 1, y: 0.5 }}
+          style={styles.gradientBackground}
+        >
           <Text style={styles.headerText}>{name}</Text>
+        </LinearGradient>
         </View>
 
         <View style={styles.imageContainer}>
@@ -25,19 +34,17 @@ const EventCard: React.FC<EventCardProps> = ({ name, imageUrl, onPress }) => {
 
 const styles = StyleSheet.create({
   card: {
-    margin: 10,
+    marginBottom: 10,
   },
   cardContainer: {
     width: "100%",
     height: 280,
-    borderRadius: 8,
     overflow: "hidden",
     backgroundColor: "#fff",
-    elevation: 5, // sombra
+    elevation: 5,
   },
   header: {
     height: 50,
-    backgroundColor: "black",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -45,6 +52,12 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  gradientBackground: {
+    flex: 1,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   imageContainer: {
     flex: 1,
